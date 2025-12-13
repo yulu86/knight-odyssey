@@ -57,7 +57,8 @@ func apply_movement(input_direction: float, delta: float) -> void:
 ## 执行移动
 func execute_movement() -> void:
 	# 使用CharacterBody2D的move_and_slide方法
-	move_and_slide()
+	# move_and_slide()
+	pass
 
 
 ## 更新精灵朝向
@@ -82,6 +83,6 @@ func get_horizontal_speed() -> float:
 
 ## 播放动画
 func play_animation(anim_name: String) -> void:
-	assert(animation_player.has_animation(anim_name), "Invalid player animate name")
+	assert(animation_player.has_animation(anim_name), "Invalid player animate name: " + anim_name)
 	if not animation_player.current_animation == anim_name:
 		animation_player.play(anim_name)
