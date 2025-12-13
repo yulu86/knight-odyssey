@@ -31,12 +31,6 @@ func update(_delta: float) -> void:
 	pass
 
 
-## 虚方法 - 物理更新
-func physics_update(_delta: float) -> void:
-	# 子类实现具体逻辑
-	pass
-
-
 ## 虚方法 - 输入处理
 func handle_input(_event: InputEvent) -> void:
 	# 子类实现具体逻辑

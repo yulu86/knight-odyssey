@@ -16,13 +16,6 @@ var states: Dictionary = {}
 ## 玩家引用
 var player: Player
 
-## 初始化
-func _ready() -> void:
-	# 暂时禁用进程调用，等待init完成
-	set_process(false)
-	set_physics_process(false)
-	set_process_input(false)
-
 
 ## 初始化状态机
 func init(player_node: Player) -> void:
@@ -33,11 +26,6 @@ func init(player_node: Player) -> void:
 
 	# 设置初始状态为IDLE
 	change_state(State.IDLE)
-
-	# 启用进程调用
-	set_process(true)
-	set_physics_process(true)
-	set_process_input(true)
 
 
 ## 创建所有状态实例
@@ -53,9 +41,9 @@ func _create_states() -> void:
 
 
 ## 物理更新 - 委托给当前状态
-func physics_process(delta: float) -> void:
+func update(delta: float) -> void:
 	if current_state:
-		current_state.physics_update(delta)
+		current_state.update(delta)
 
 
 ## 输入处理

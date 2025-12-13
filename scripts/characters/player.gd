@@ -18,9 +18,9 @@ func _ready() -> void:
 
 
 ## 物理更新 - 每帧调用，处理物理相关逻辑
-func _physics_process(delta: float) -> void:
+func _process(delta: float) -> void:
 	# 更新状态机
-	state_machine.physics_process(delta)
+	state_machine.update(delta)
 
 
 ## 输入处理 - 处理输入事件

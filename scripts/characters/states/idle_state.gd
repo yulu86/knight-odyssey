@@ -14,7 +14,7 @@ func exit() -> void:
 
 
 ## 物理更新
-func physics_update(delta: float) -> void:
+func update(delta: float) -> void:
 	# 获取移动输入
 	var input_direction: float = get_movement_input()
 
