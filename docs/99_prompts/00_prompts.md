@@ -101,6 +101,7 @@ use context7 请与我与我协开发 US_20251213154200_01 01_基础角色移动
 参考文档：
 - 游戏需求GDD: docs/01_GDD/01_游戏设计文档_骑士的奥德赛大冒险.md
 - 游戏架构概要设计: docs/02_arch/01_游戏架构概要设计_骑士的奥德赛大冒险.md
+- backlog：docs/03_sprint/01_backlog.md
 - story文档：docs/03_sprint/02_story/01_基础角色移动.md
 - 手把手开发指导: docs/04_hands_by_hands/US_20251213154200_01_基础角色移动_手把手开发指导.md
 ```
