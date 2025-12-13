@@ -8,6 +8,9 @@
 
 [node name="Player" parent="." instance=ExtResource("1_m7npr")]
 position = Vector2(53, 105)
+acceleration = 300.0
+friction = 1200.0
+jump_velocity = -240.0
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(53, 105)
