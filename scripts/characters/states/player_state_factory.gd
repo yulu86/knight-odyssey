@@ -4,8 +4,6 @@ class_name PlayerStateFactory
 var states: Dictionary = {
 	PlayerStateMachine.State.IDLE: IdleState,
 	PlayerStateMachine.State.WALK: WalkState,
-	PlayerStateMachine.State.JUMP: JumpState,
-	PlayerStateMachine.State.FALL: FallState
 }
 
 

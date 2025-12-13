@@ -15,13 +15,9 @@ func exit() -> void:
 
 ## 物理更新
 func update(delta: float) -> void:
-	# 获取移动输入
-	var input_direction: float = get_movement_input()
-
-	# 如果有移动输入，切换到行走状态
-	if input_direction != 0.0:
+	# 如果有水平移动输入，切换到行走状态
+	if !has_no_horizontal_input():
 		state_changed.emit(PlayerStateMachine.State.WALK)
-		return
 
 	# 应用摩擦力使角色停止
 	player.apply_movement(0.0, delta)

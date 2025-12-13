@@ -49,6 +49,7 @@ func change_state(new_state: State) -> void:
 		current_player_state.exit()
 
 	# 新状态初始化
+	current_state = new_state
 	current_player_state = state_factory.get_state(new_state)
 	current_player_state.init(player)
 	current_player_state.state_changed.connect(change_state)

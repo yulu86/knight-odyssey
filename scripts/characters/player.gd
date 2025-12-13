@@ -29,19 +29,6 @@ func _input(event: InputEvent) -> void:
 	state_machine.handle_input(event)
 
 
-## 获取移动输入 - 返回-1(左)、0(停止)、1(右)
-func handle_movement_input() -> float:
-	var input_direction: float = 0.0
-
-	# 使用输入动作获取方向
-	if Input.is_action_pressed("move_left"):
-		input_direction -= 1.0
-	if Input.is_action_pressed("move_right"):
-		input_direction += 1.0
-
-	return input_direction
-
-
 ## 移动处理 - 应用速度和移动
 func apply_movement(input_direction: float, delta: float) -> void:
 	# 计算目标速度
@@ -57,8 +44,7 @@ func apply_movement(input_direction: float, delta: float) -> void:
 ## 执行移动
 func execute_movement() -> void:
 	# 使用CharacterBody2D的move_and_slide方法
-	# move_and_slide()
-	pass
+	move_and_slide()
 
 
 ## 更新精灵朝向
