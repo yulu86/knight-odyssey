@@ -29,9 +29,9 @@ func update(delta: float) -> void:
 	if is_on_ground():
 		# 根据水平速度决定进入空闲或行走状态
 		if abs(player.velocity.x) > 10.0:
-			state_machine.change_state(PlayerStateMachine.State.WALK)
+			state_changed.emit(PlayerStateMachine.State.WALK)
 		else:
-			state_machine.change_state(PlayerStateMachine.State.IDLE)
+			state_changed.emit(PlayerStateMachine.State.IDLE)
 
 
 ## 输入处理

@@ -27,7 +27,7 @@ func update(delta: float) -> void:
 
 	# 检查是否开始下落
 	if player.velocity.y > 0:
-		state_machine.change_state(PlayerStateMachine.State.FALL)
+		state_changed.emit(PlayerStateMachine.State.FALL)
 
 
 ## 输入处理

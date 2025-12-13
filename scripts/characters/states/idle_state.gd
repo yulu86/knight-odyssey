@@ -20,7 +20,7 @@ func update(delta: float) -> void:
 
 	# 如果有移动输入，切换到行走状态
 	if input_direction != 0.0:
-		state_machine.change_state(PlayerStateMachine.State.WALK)
+		state_changed.emit(PlayerStateMachine.State.WALK)
 		return
 
 	# 应用摩擦力使角色停止

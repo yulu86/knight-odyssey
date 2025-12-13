@@ -1,16 +1,19 @@
 class_name PlayerState
 extends Node
 
+
+@warning_ignore("unused_signal")
+signal state_changed(new_state: PlayerStateMachine.State)
+
+
 ## 引用父节点和系统
 var player: Player
-var state_machine: PlayerStateMachine
 var animation_player: AnimationPlayer
 
 ## 初始化 - 设置引用
-func init(player_node: Player, state_machine_node: PlayerStateMachine) -> void:
-	player = player_node
-	state_machine = state_machine_node
-	animation_player = player_node.animation_player
+func init(context_player: Player) -> void:
+	player = context_player
+	animation_player = context_player.animation_player
 
 
 ## 虚方法 - 状态进入时调用
@@ -49,7 +52,7 @@ func apply_movement(input_direction: float, delta: float) -> void:
 
 
 ## 辅助方法 - 播放动画
-func play_animation(anim_name: String) -> void:
+func play_animation(anim_name: String) -> void:	
 	player.play_animation(anim_name)
 
 
@@ -61,3 +64,7 @@ func update_sprite_facing(input_direction: float) -> void:
 ## 辅助方法 - 检查是否在地面上
 func is_on_ground() -> bool:
 	return player.is_on_ground()
+
+
+func transition_to_state(new_state: PlayerStateMachine.State) -> void:
+	state_changed.emit(new_state)

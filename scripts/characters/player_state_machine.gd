@@ -48,7 +48,11 @@ func change_state(new_state: State) -> void:
 	if current_player_state:
 		current_player_state.exit()
 
-	# 进入新状态
+	# 新状态初始化
 	current_player_state = state_factory.get_state(new_state)
+	current_player_state.init(player)
+	current_player_state.state_changed.connect(change_state)
+
+	# 进入新状态
 	if current_player_state:
 		current_player_state.enter()

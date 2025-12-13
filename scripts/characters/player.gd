@@ -82,8 +82,6 @@ func get_horizontal_speed() -> float:
 
 ## 播放动画
 func play_animation(anim_name: String) -> void:
-	if animation_player.has_animation(anim_name):
-		if animation_player.current_animation != anim_name:
-			animation_player.play(anim_name)
-	else:
-		print("警告：动画 '", anim_name, "' 不存在")
+	assert(animation_player.has_animation(anim_name), "Invalid player animate name")
+	if not animation_player.current_animation == anim_name:
+		animation_player.play(anim_name)

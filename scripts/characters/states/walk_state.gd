@@ -20,7 +20,7 @@ func update(delta: float) -> void:
 
 	# 如果没有移动输入，切换到空闲状态
 	if input_direction == 0.0:
-		state_machine.change_state(PlayerStateMachine.State.IDLE)
+		state_changed.emit(PlayerStateMachine.State.IDLE)
 		return
 
 	# 应用移动
