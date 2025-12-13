@@ -26,19 +26,19 @@ func exit() -> void:
 
 
 ## 虚方法 - 每帧更新
-func update(delta: float) -> void:
+func update(_delta: float) -> void:
 	# 子类实现具体逻辑
 	pass
 
 
 ## 虚方法 - 物理更新
-func physics_update(delta: float) -> void:
+func physics_update(_delta: float) -> void:
 	# 子类实现具体逻辑
 	pass
 
 
 ## 虚方法 - 输入处理
-func handle_input(event: InputEvent) -> void:
+func handle_input(_event: InputEvent) -> void:
 	# 子类实现具体逻辑
 	pass
 

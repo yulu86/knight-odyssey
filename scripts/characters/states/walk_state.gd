@@ -31,6 +31,6 @@ func physics_update(delta: float) -> void:
 
 
 ## 输入处理
-func handle_input(event: InputEvent) -> void:
+func handle_input(_event: InputEvent) -> void:
 	# 目前行走状态不需要特殊输入处理
 	pass

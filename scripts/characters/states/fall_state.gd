@@ -35,6 +35,6 @@ func physics_update(delta: float) -> void:
 
 
 ## 输入处理
-func handle_input(event: InputEvent) -> void:
+func handle_input(_event: InputEvent) -> void:
 	# 下落状态的输入处理
 	pass
