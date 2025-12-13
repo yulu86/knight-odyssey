@@ -45,3 +45,37 @@ ultrathink 请根据游戏GDD文档和架构概要设计文档，创建sprint开
 - 游戏架构概要设计: docs/02_arch/01_游戏架构概要设计_骑士的奥德赛大冒险.md
 - story模版: docs/99_prompts/templates/STORY.md
 ```
+
+---
+
+# 4. Story手把手开发指导
+
+use context7 请给出 US_20251213154200_01 01_基础角色移动.md 的手把手开发指导:
+1. 读取Story文档和游戏架构概要设计
+2. 详细设计Story实现方案
+3. 让我确认设计方案
+4. 等我确认设计方案准确无误后，输出手把手详细开发指导到 docs/04_hands_by_hands/ 
+要求:
+- 请严格遵守游戏架构概要设计
+- 输出的设计和指导中只需要包含代码框架, 例如：类、方法的签名(方法名、参入、返回值)设计
+- 需要我执行的操作，请在手把手指导中给出详细说明
+约束：
+- 必须使用`godot-copilot`技能 设计并输出指导
+- 仅输出设计和指导，禁止编写代码
+- 指导中禁止包含详细实现代码，例如
+    ```gdscript
+    func _physics_process(delta: float) -> void:
+        # 处理输入
+        var input_direction = Input.get_axis("move_left", "move_right")
+
+        # 更新状态机
+        state_machine.physics_update(delta)
+
+        # 处理朝向（确保始终面向正确方向）
+        if velocity.x != 0:
+            sprite.flip_h = velocity.x < 0
+    ```
+参考文档：
+- 游戏需求GDD: docs/01_GDD/01_游戏设计文档_骑士的奥德赛大冒险.md
+- 游戏架构概要设计: docs/02_arch/01_游戏架构概要设计_骑士的奥德赛大冒险.md
+- story文档：docs/03_sprint/02_story/01_基础角色移动.md
