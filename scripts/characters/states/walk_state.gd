@@ -23,7 +23,7 @@ func update(delta: float) -> void:
 		state_changed.emit(PlayerStateMachine.State.IDLE)
 
 	# 应用移动
-	apply_movement(input_direction, delta)
+	move(input_direction, delta)
 
 	# 更新精灵朝向
 	update_sprite_facing(input_direction)

@@ -59,9 +59,9 @@ func get_horizontal_movement_direction() -> float:
 
 
 ## 辅助方法 - 应用移动
-func apply_movement(input_direction: float, delta: float) -> void:
-	player.apply_movement(input_direction, delta)
-	player.execute_movement()
+func move(input_direction: float, delta: float) -> void:
+	player.update_velocity(input_direction, delta)
+	player.move_and_slide()
 
 
 ## 辅助方法 - 播放动画

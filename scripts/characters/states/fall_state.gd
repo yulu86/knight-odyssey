@@ -18,7 +18,7 @@ func exit() -> void:
 func update(delta: float) -> void:
 	# 处理水平移动（空中控制）
 	var input_direction = get_horizontal_movement_direction()
-	apply_movement(input_direction, delta)
+	move(input_direction, delta)
 	update_sprite_facing(input_direction)
 
 	# 检查着陆

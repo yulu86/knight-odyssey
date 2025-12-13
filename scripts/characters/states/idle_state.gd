@@ -20,8 +20,7 @@ func update(delta: float) -> void:
 		state_changed.emit(PlayerStateMachine.State.WALK)
 
 	# 应用摩擦力使角色停止
-	player.apply_movement(0.0, delta)
-	player.execute_movement()
+	move(0.0, delta)
 
 
 ## 输入处理

@@ -47,7 +47,7 @@ func _input(event: InputEvent) -> void:
 
 
 ## 移动处理 - 应用速度和移动
-func apply_movement(input_direction: float, delta: float) -> void:
+func update_velocity(input_direction: float, delta: float) -> void:
 	# 计算目标速度
 	var target_velocity: float = input_direction * move_speed
 
@@ -56,12 +56,6 @@ func apply_movement(input_direction: float, delta: float) -> void:
 		velocity.x = move_toward(velocity.x, target_velocity, acceleration * delta)
 	else:
 		velocity.x = move_toward(velocity.x, 0.0, friction * delta)
-
-
-## 执行移动
-func execute_movement() -> void:
-	# 使用CharacterBody2D的move_and_slide方法
-	move_and_slide()
 
 
 ## 更新精灵朝向
