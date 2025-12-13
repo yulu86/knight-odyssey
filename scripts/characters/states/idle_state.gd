@@ -26,5 +26,5 @@ func update(delta: float) -> void:
 ## 输入处理
 func handle_input(event: InputEvent) -> void:
 	# 检测跳跃输入
-	if event.is_action_pressed("jump") and is_on_ground():
+	if event.is_action_pressed("jump"):
 		transition_to_state(PlayerStateMachine.State.JUMP)

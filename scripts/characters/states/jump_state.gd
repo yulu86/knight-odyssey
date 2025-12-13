@@ -4,7 +4,7 @@ extends PlayerState
 # 状态进入
 func enter() -> void:
 	# 触发跳跃
-	player.jump()
+	player.velocity.y = player.jump_velocity
 	# 播放跳跃动画
 	play_animation("jump")
 
@@ -22,9 +22,6 @@ func update(delta: float) -> void:
 	move(input_direction, delta)
 	update_sprite_facing(input_direction)
 
-	# 检查状态转换
-	check_state_transition()
-
 
 # 输入处理
 func handle_input(_event: InputEvent) -> void:
@@ -32,8 +29,16 @@ func handle_input(_event: InputEvent) -> void:
 	pass
 
 
-# 私有方法 - 检查状态转换
-func check_state_transition() -> void:
-	# 当垂直速度向下时，转换到FallState
-	if player.velocity.y > 0:
+
+func update_velocity(player_velocity: Vector2, input_direction: float, delta: float) -> Vector2:
+	player_velocity = super.update_velocity(player_velocity, input_direction, delta)
+
+	# 在跳跃状态下应用重力，使速度逐渐减小
+	player_velocity.y += player.gravity * delta
+
+	# 检查是否应该开始下落
+	if player_velocity.y >= 0:
+		# 已经达到最高点，开始下落
 		transition_to_state(PlayerStateMachine.State.FALL)
+	
+	return player_velocity

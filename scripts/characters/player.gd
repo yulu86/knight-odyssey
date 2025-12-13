@@ -24,15 +24,8 @@ func _ready() -> void:
 	state_machine.init(self)
 
 
-## 更新 - 每帧调用，处理逻辑
+## 更新 - 处理逻辑
 func _process(delta: float) -> void:
-	# 应用重力
-	apply_gravity(delta)
-
-	# 如果在地面上且不在跳跃状态，重置跳跃标志
-	if is_on_floor() and velocity.y >= 0:
-		reset_jump_state()
-
 	# 更新状态机
 	state_machine.update(delta)
 
@@ -44,18 +37,6 @@ func _process(delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	# 传递输入给状态机
 	state_machine.handle_input(event)
-
-
-## 移动处理 - 应用速度和移动
-func update_velocity(input_direction: float, delta: float) -> void:
-	# 计算目标速度
-	var target_velocity: float = input_direction * move_speed
-
-	# 使用加速和摩擦平滑过渡到目标速度
-	if input_direction != 0.0:
-		velocity.x = move_toward(velocity.x, target_velocity, acceleration * delta)
-	else:
-		velocity.x = move_toward(velocity.x, 0.0, friction * delta)
 
 
 ## 更新精灵朝向
@@ -83,31 +64,3 @@ func play_animation(anim_name: String) -> void:
 	assert(animation_player.has_animation(anim_name), "Invalid player animate name: " + anim_name)
 	if not animation_player.current_animation == anim_name:
 		animation_player.play(anim_name)
-
-
-## 跳跃相关方法
-
-## 应用重力
-func apply_gravity(delta: float) -> void:
-	if not is_on_floor():
-		velocity.y += gravity * delta
-		# 限制最大下落速度
-		velocity.y = min(velocity.y, gravity * 2)
-
-## 执行跳跃
-func jump() -> void:
-	if is_on_floor() and not is_jumping:
-		velocity.y = jump_velocity
-		is_jumping = true
-
-## 检查是否可以跳跃
-func can_jump() -> bool:
-	return is_on_floor() and not is_jumping
-
-## 重置跳跃状态
-func reset_jump_state() -> void:
-	is_jumping = false
-
-## 获取跳跃状态
-func get_jump_state() -> bool:
-	return is_jumping

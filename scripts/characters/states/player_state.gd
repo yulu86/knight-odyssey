@@ -60,8 +60,22 @@ func get_horizontal_movement_direction() -> float:
 
 ## 辅助方法 - 应用移动
 func move(input_direction: float, delta: float) -> void:
-	player.update_velocity(input_direction, delta)
+	player.velocity = update_velocity(player.velocity, input_direction, delta)
 	player.move_and_slide()
+
+
+## 移动处理 - 更新速度和移动
+func update_velocity(player_velocity: Vector2, input_direction: float, delta: float) -> Vector2:
+	# 计算目标速度
+	var horizontal_velocity: float = input_direction * player.move_speed
+
+	# 使用加速和摩擦平滑过渡到目标速度
+	if input_direction != 0.0:
+		player_velocity.x = move_toward(player_velocity.x, horizontal_velocity, player.acceleration * delta)
+	else:
+		player_velocity.x = move_toward(player_velocity.x, 0.0, player.friction * delta)
+	
+	return player_velocity
 
 
 ## 辅助方法 - 播放动画
