@@ -12,7 +12,7 @@ config_version=5
 
 config/name="knight-odyssey"
 run/main_scene="uid://hgauv8oa4wbf"
-config/features=PackedStringArray("4.4", "GL Compatibility")
+config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [display]
