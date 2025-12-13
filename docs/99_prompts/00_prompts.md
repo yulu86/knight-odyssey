@@ -14,7 +14,7 @@ ultrathink 请根据 docs/00_scratch/ 目录下的图片，设计2D平台跳跃�
 # 2. 架构设计
 
 ```
-use context7 请输出游戏架构概要设计:
+ultrathink use context7 请输出游戏架构概要设计:
 1. 读取`游戏需求GDD`，理解游戏需求
 3. 结合业界最佳实践中的成熟方案和合理的设计模式， 使用 `godot-copilot`技能进行架构设计
 3. 委托 tech-docs-writer 输出详架构概要设计文档到 docs/02_arch/
