@@ -31,13 +31,8 @@ func exit() -> void:
 
 ## 虚方法 - 每帧更新
 func update(delta: float) -> void:
-	var input_direction := get_input_direction()
-
 	# 玩家移动
-	move(input_direction, delta)
-
-	# 更新精灵朝向
-	update_sprite_facing(input_direction)
+	move(delta)
 
 
 ## 虚方法 - 输入处理
@@ -57,7 +52,14 @@ func get_input_direction() -> float:
 
 
 ## 辅助方法 - 应用移动
-func move(input_direction: float, delta: float) -> void:
+func move(delta: float) -> void:
+	# 输入的水平移动方向
+	var input_direction := get_input_direction()	
+
+	# 更新精灵朝向
+	update_sprite_facing(input_direction)
+
+	# 更新移动速度
 	player.velocity = update_velocity(player.velocity, input_direction, delta)
 	player.move_and_slide()
 
