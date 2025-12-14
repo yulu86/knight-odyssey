@@ -12,9 +12,9 @@ var animation_player: AnimationPlayer
 
 
 ## 初始化 - 设置引用
-func init(_context_player: Player, context_player_components: PlayerComponents) -> void:
-	player = context_player_components.player
-	animation_player = context_player_components.animation_player
+func init(player_components: PlayerComponents) -> void:
+	player = player_components.player
+	animation_player = player_components.animation_player
 
 
 ## 虚方法 - 状态进入时调用
