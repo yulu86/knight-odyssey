@@ -58,8 +58,8 @@ func move(delta: float) -> void:
 	# 输入的水平移动方向
 	var input_direction := get_input_direction()	
 
-	# 更新精灵朝向
-	update_sprite_facing(input_direction)
+	# 更新玩家朝向
+	update_player_facing(input_direction)
 
 	# 更新移动速度
 	player.velocity = update_velocity(player.velocity, input_direction, delta)
@@ -86,8 +86,8 @@ func play_animation(anim_name: String) -> void:
 	player.play_animation(anim_name)
 
 
-## 辅助方法 - 更新精灵朝向
-func update_sprite_facing(input_direction: float) -> void:
+## 辅助方法 - 更新玩家朝向
+func update_player_facing(input_direction: float) -> void:
 	if not has_input_direction(input_direction):
 		return
 	
