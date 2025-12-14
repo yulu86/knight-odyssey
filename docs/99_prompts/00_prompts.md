@@ -90,7 +90,7 @@ use context7 请给出下一个`Must`级别待开发的Story的手把手开发�
 # 5. Story协同开发
 
 ```
-use context7 请与我与我协开发 US_20251213154200_03_二段跳系统 :
+use context7 请与我与我协开发:
 1. 切换到开发分支
 2. 读取手把手开发指导
 3. 严格遵守指导，使用`godot-copilot`技能与我协同开发，在需要我手动操作时，输出详细操作指导，并暂停执行
@@ -106,6 +106,6 @@ use context7 请与我与我协开发 US_20251213154200_03_二段跳系统 :
 - 游戏需求GDD: docs/01_GDD/01_游戏设计文档_骑士的奥德赛大冒险.md
 - 游戏架构概要设计: docs/02_arch/01_游戏架构概要设计_骑士的奥德赛大冒险.md
 - backlog：docs/03_sprint/01_backlog.md
-- story文档：docs/03_sprint/02_story/03_二段跳系统.md
-- 手把手开发指导: docs/04_hands_by_hands/US_20251213154200_03_二段跳系统开发指导.md
+- story文档：docs/03_sprint/02_story/05_踩踏攻击机制.md
+- 手把手开发指导: docs/04_hands_by_hands/US_20251213154200_05_踩踏攻击机制开发指导.md
 ```
