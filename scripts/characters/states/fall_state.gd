@@ -16,16 +16,10 @@ func exit() -> void:
 
 # 每帧更新
 func update(delta: float) -> void:
-	super.update(delta)
-
 	# 检查着陆
 	check_landing()
 
-
-# 输入处理
-func handle_input(_event: InputEvent) -> void:
-	# Fall状态下主要处理移动输入
-	pass
+	super.update(delta)
 
 
 # 私有方法 - 检查着陆
@@ -36,17 +30,3 @@ func check_landing() -> void:
 			transition_to_state(PlayerStateMachine.State.IDLE)
 		else:
 			transition_to_state(PlayerStateMachine.State.WALK)
-
-
-## 移动处理 - 更新速度和移动
-func update_velocity(player_velocity: Vector2, input_direction: float, delta: float) -> Vector2:
-	player_velocity = super.update_velocity(player_velocity, input_direction, delta)
-	
-	# 在下落状态下应用重力，加速下落
-	player_velocity.y += player.gravity * delta
-
-	# 限制最大下落速度，防止下落过快
-	var max_fall_speed = player.gravity * 2
-	player_velocity.y = min(player_velocity.y, max_fall_speed)
-
-	return player_velocity
