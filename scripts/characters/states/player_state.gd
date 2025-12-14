@@ -44,21 +44,13 @@ func handle_input(_event: InputEvent) -> void:
 
 
 ## 辅助方法 - 是否水平无输入
-func has_no_input_direction(input_direction: float = get_input_direction()) -> bool:
-	return is_zero_approx(input_direction)
+func has_input_direction(input_direction: float = get_input_direction()) -> bool:
+	return not is_zero_approx(input_direction)
 
 
 ## 辅助方法 - 水平移动输入方向
 func get_input_direction() -> float:
-	var input_direction: float = 0.0
-
-	# 使用输入动作获取方向
-	if Input.is_action_pressed("move_left"):
-		input_direction -= 1.0
-	if Input.is_action_pressed("move_right"):
-		input_direction += 1.0
-
-	return input_direction
+	return Input.get_axis("move_left", "move_right")
 
 
 ## 辅助方法 - 应用移动

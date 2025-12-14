@@ -35,7 +35,7 @@ func handle_input(_event: InputEvent) -> void:
 func check_landing() -> void:
 	if is_on_ground():
 		# 根据水平输入决定转换到Idle还是Walk
-		if has_no_input_direction():
+		if not has_input_direction():
 			transition_to_state(PlayerStateMachine.State.IDLE)
 		else:
 			transition_to_state(PlayerStateMachine.State.WALK)

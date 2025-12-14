@@ -19,7 +19,7 @@ func update(delta: float) -> void:
 	var input_direction: float = get_input_direction()
 
 	# 如果没有移动输入，切换到空闲状态
-	if has_no_input_direction(input_direction):
+	if not has_input_direction(input_direction):
 		state_changed.emit(PlayerStateMachine.State.IDLE)
 
 	# 应用移动
