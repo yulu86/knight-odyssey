@@ -15,6 +15,7 @@ extends CharacterBody2D
 
 var player_components: PlayerComponents
 
+
 ## 初始化
 func _ready() -> void:
 	# 初始化状态机
