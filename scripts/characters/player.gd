@@ -4,7 +4,8 @@ extends CharacterBody2D
 ## 导出变量 - 在检查器中可配置
 @export var move_speed: float = 150.0
 @export var acceleration: float = 300.0
-@export var friction: float = 1200.0
+@export var floor_friction: float = 1200.0
+@export var air_friction: float = floor_friction * 1.5
 @export var jump_velocity: float = -320.0  # 跳跃初速度
 
 ## 私有变量
