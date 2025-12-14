@@ -23,7 +23,7 @@ func _ready() -> void:
 	gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 	# 初始化状态机
 	player_components = PlayerComponents.new()
-	player_components.setup(self, animation_player)
+	player_components.setup(self, sprite, animation_player)
 	state_machine.init(self, player_components)
 
 
@@ -37,16 +37,6 @@ func _process(delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	# 传递输入给状态机
 	state_machine.handle_input(event)
-
-
-## 更新精灵朝向
-func update_sprite_facing(input_direction: float) -> void:
-	if input_direction < 0.0:
-		# 向左移动
-		sprite.flip_h = true
-	elif input_direction > 0.0:
-		# 向右移动
-		sprite.flip_h = false
 
 
 ## 检查是否在地面上

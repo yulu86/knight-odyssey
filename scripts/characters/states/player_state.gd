@@ -8,12 +8,14 @@ signal state_changed(new_state: PlayerStateMachine.State)
 
 ## 引用父节点和系统
 var player: Player
+var sprite: Sprite2D
 var animation_player: AnimationPlayer
 
 
 ## 初始化 - 设置引用
 func init(player_components: PlayerComponents) -> void:
 	player = player_components.player
+	sprite = player_components.sprite
 	animation_player = player_components.animation_player
 
 
@@ -86,7 +88,10 @@ func play_animation(anim_name: String) -> void:
 
 ## 辅助方法 - 更新精灵朝向
 func update_sprite_facing(input_direction: float) -> void:
-	player.update_sprite_facing(input_direction)
+	if not has_input_direction(input_direction):
+		return
+	
+	sprite.flip_h = input_direction < 0.0
 
 
 ## 辅助方法 - 检查是否在地面上
@@ -94,5 +99,6 @@ func is_on_ground() -> bool:
 	return player.is_on_ground()
 
 
+# 状态转换
 func transition_to_state(new_state: PlayerStateMachine.State) -> void:
 	state_changed.emit(new_state)
