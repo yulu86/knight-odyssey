@@ -9,14 +9,12 @@ signal state_changed(new_state: PlayerStateMachine.State)
 ## 引用父节点和系统
 var player: Player
 var animation_player: AnimationPlayer
-var player_components: PlayerComponents
 
 
 ## 初始化 - 设置引用
-func init(context_player: Player, context_player_components: PlayerComponents) -> void:
-	player = context_player
-	animation_player = context_player.animation_player
-	player_components = context_player_components
+func init(_context_player: Player, context_player_components: PlayerComponents) -> void:
+	player = context_player_components.player
+	animation_player = context_player_components.animation_player
 
 
 ## 虚方法 - 状态进入时调用
