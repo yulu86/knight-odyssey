@@ -8,6 +8,11 @@ var floor_friction: float
 var air_friction: float
 var jump_velocity: float  # 跳跃初速度
 
+## 跳跃系统参数
+var jump_count: int = 0          # 当前跳跃次数
+var max_jump_count: int = 2      # 最大跳跃次数（支持二段跳）
+var double_jump_velocity: float = -240.0  # 二段跳速度
+
 ## 调试参数 - 保留在检查器中可配置
 @export var is_debug: bool = false
 
@@ -43,6 +48,10 @@ func load_player_config() -> void:
 func _process(delta: float) -> void:
 	# 更新状态机
 	state_machine.update(delta)
+
+	# 落地时重置跳跃计数
+	if jump_count > 0 and is_on_floor():
+		jump_count = 0
 
 
 ## 输入处理 - 处理输入事件

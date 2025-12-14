@@ -6,6 +6,7 @@ var states: Dictionary = {
 	PlayerStateMachine.State.WALK: WalkState,
 	PlayerStateMachine.State.JUMP: JumpState,
 	PlayerStateMachine.State.FALL: FallState,
+	PlayerStateMachine.State.DOUBLE_JUMP: DoubleJumpState,  # 新增：二段跳状态
 }
 
 

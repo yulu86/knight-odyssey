@@ -6,7 +6,8 @@ enum State {
 	IDLE,
 	WALK,
 	JUMP,
-	FALL
+	FALL,
+	DOUBLE_JUMP  # 新增：二段跳状态
 }
 
 @export var is_debug := false
