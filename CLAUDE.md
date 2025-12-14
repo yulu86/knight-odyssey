@@ -91,6 +91,8 @@ knight-odyssey/
 │   ├── music/          # 背景音乐
 │   ├── sounds/         # 音效文件
 │   └── sprites/        # 精灵图片
+├── configs/            # 配置文件
+│   └── player_config.cfg # 玩家配置
 ├── scenes/             # Godot场景文件
 │   ├── characters/     # 角色场景
 │   └── test/          # 测试场景
@@ -100,6 +102,7 @@ knight-odyssey/
 │   ├── enemies/        # 敌人脚本
 │   ├── levels/         # 关卡脚本
 │   └── managers/       # 管理器脚本
+│       └── config_manager.gd # 配置管理器
 ├── docs/               # 项目文档
 │   ├── 01_GDD/        # 游戏设计文档
 │   ├── 02_arch/       # 架构设计文档
@@ -159,6 +162,36 @@ knight-odyssey/
    - 强调字体：PixelOperator8-Bold.ttf
    - 特殊字体：zpix.ttf
 
+### 配置管理
+
+1. **配置文件系统**
+   - 使用Godot ConfigFile格式（.cfg）
+   - 配置文件位置：`configs/player_config.cfg`
+   - ConfigManager单例负责加载和管理配置
+
+2. **玩家移动配置**
+   ```ini
+   [player]
+   move_speed=150.0        # 水平移动速度
+   acceleration=300.0      # 加速度
+   floor_friction=1200.0   # 地面摩擦力
+   air_friction=1800.0     # 空气摩擦力
+   jump_velocity=-320.0    # 跳跃初速度
+   gravity_scale=1.0       # 重力缩放因子
+   is_debug=false         # 调试开关
+   ```
+
+3. **使用配置系统**
+   - ConfigManager已注册为AutoLoad单例
+   - 在Player._ready()中自动加载配置
+   - 使用`ConfigManager.get_player_value(key, default)`获取配置
+   - 配置文件不存在时自动使用默认值
+
+4. **配置文件修改**
+   - 直接编辑`configs/player_config.cfg`文件
+   - 修改后重启游戏生效
+   - 所有数值类型需使用英文小数点格式
+
 ## 已实现功能
 
 ### 玩家控制系统
@@ -166,6 +199,7 @@ knight-odyssey/
 - ✅ 空闲和行走状态
 - ✅ 状态机基础架构
 - ✅ 动画系统集成（idle, walk）
+- ✅ 配置文件系统（移动参数外部化）
 
 ### 待实现功能（按优先级）
 
