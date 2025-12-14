@@ -8,10 +8,10 @@ var floor_friction: float
 var air_friction: float
 var jump_velocity: float  # 跳跃初速度
 
-## 跳跃系统参数
+## 跳跃系统参数 - 从配置文件加载
 var jump_count: int = 0          # 当前跳跃次数
-var max_jump_count: int = 2      # 最大跳跃次数（支持二段跳）
-var double_jump_velocity: float = -240.0  # 二段跳速度
+var max_jump_count: int          # 最大跳跃次数（从配置加载）
+var double_jump_velocity: float  # 二段跳速度（从配置加载）
 
 ## 调试参数 - 保留在检查器中可配置
 @export var is_debug: bool = false
@@ -41,6 +41,9 @@ func load_player_config() -> void:
 	floor_friction = ConfigManager.get_player_value("floor_friction", 1200.0)
 	air_friction = ConfigManager.get_player_value("air_friction", 1800.0)
 	jump_velocity = ConfigManager.get_player_value("jump_velocity", -320.0)
+	# 加载二段跳相关配置
+	double_jump_velocity = ConfigManager.get_player_value("double_jump_velocity", -450.0)
+	max_jump_count = int(ConfigManager.get_player_value("max_jump_count", 2))
 	is_debug = ConfigManager.get_player_value("is_debug", false)
 
 
