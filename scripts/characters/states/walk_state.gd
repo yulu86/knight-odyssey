@@ -16,7 +16,7 @@ func exit() -> void:
 ## 物理更新
 func update(delta: float) -> void:
 	# 获取移动输入
-	var input_direction: float = get_horizontal_movement_direction()
+	var input_direction: float = get_input_direction()
 
 	# 如果没有移动输入，切换到空闲状态
 	if has_no_horizontal_input(input_direction):

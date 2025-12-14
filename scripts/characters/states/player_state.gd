@@ -44,12 +44,12 @@ func handle_input(_event: InputEvent) -> void:
 
 
 ## 辅助方法 - 是否水平无输入
-func has_no_horizontal_input(input_direction: float = get_horizontal_movement_direction()) -> bool:
+func has_no_horizontal_input(input_direction: float = get_input_direction()) -> bool:
 	return input_direction == 0.0
 
 
 ## 辅助方法 - 水平移动输入方向
-func get_horizontal_movement_direction() -> float:
+func get_input_direction() -> float:
 	var input_direction: float = 0.0
 
 	# 使用输入动作获取方向
