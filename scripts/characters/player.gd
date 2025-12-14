@@ -9,7 +9,6 @@ extends CharacterBody2D
 
 ## 私有变量
 var gravity: float  # 从项目设置获取的重力
-var is_jumping: bool = false  # 跳跃状态标志
 
 ## 节点引用 - @onready 会在节点准备好后自动赋值
 @onready var sprite: Sprite2D = $Sprite2D
@@ -28,9 +27,6 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	# 更新状态机
 	state_machine.update(delta)
-
-	# 执行移动
-	move_and_slide()
 
 
 ## 输入处理 - 处理输入事件
