@@ -44,8 +44,8 @@ func handle_input(_event: InputEvent) -> void:
 
 
 ## 辅助方法 - 是否水平无输入
-func has_no_horizontal_input(input_direction: float = get_input_direction()) -> bool:
-	return input_direction == 0.0
+func has_no_input_direction(input_direction: float = get_input_direction()) -> bool:
+	return is_zero_approx(input_direction)
 
 
 ## 辅助方法 - 水平移动输入方向
