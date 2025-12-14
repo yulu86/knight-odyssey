@@ -51,17 +51,19 @@ ultrathink 请根据游戏GDD文档和架构概要设计文档，创建sprint开
 # 4. Story手把手开发指导
 
 ```
-use context7 请给出 US_20251213154200_02 02_基础跳跃机制.md 的手把手开发指导:
-1. 读取Story文档和游戏架构概要设计
-2. 详细设计Story实现方案
-3. 让我确认设计方案
-4. 等我确认设计方案准确无误后，输出手把手详细开发指导到 docs/04_hands_by_hands/ 
+use context7 请给出下一个`Must`级别待开发的Story的手把手开发指导:
+1. 读取backlog文档，获取下一个`Must`级别待开发的Story，并找我确认
+2. 等待我的确认
+3. 读取Story文档和游戏架构概要设计
+4. 详细设计Story实现方案
+5. 让我确认设计方案
+6. 等我确认设计方案准确无误后，输出手把手详细开发指导到 docs/04_hands_by_hands/ 
 要求:
 - 请严格遵守游戏架构概要设计
 - 输出的设计和指导中只需要包含代码框架, 例如：类、方法的签名(方法名、参入、返回值)设计
 - 需要我执行的操作，请在手把手指导中给出详细说明
 约束：
-- 必须使用`godot-copilot`技能 设计并输出指导
+- 必须使用`godot-copilot`技能设计并输出指导
 - 仅输出设计和指导，禁止编写代码
 - 指导中禁止包含详细实现代码，例如
     ```gdscript
@@ -77,9 +79,10 @@ use context7 请给出 US_20251213154200_02 02_基础跳跃机制.md 的手把�
             sprite.flip_h = velocity.x < 0
     ```
 参考文档：
+- backlog：docs/03_sprint/01_backlog.md
 - 游戏需求GDD: docs/01_GDD/01_游戏设计文档_骑士的奥德赛大冒险.md
 - 游戏架构概要设计: docs/02_arch/01_游戏架构概要设计_骑士的奥德赛大冒险.md
-- story文档：docs/03_sprint/02_story/02_基础跳跃机制.md
+- story文档列表：docs/03_sprint/02_story/
 ```
 
 ---
