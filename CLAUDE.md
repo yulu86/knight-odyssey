@@ -177,7 +177,6 @@ knight-odyssey/
    floor_friction=1200.0   # 地面摩擦力
    air_friction=1800.0     # 空气摩擦力
    jump_velocity=-320.0    # 跳跃初速度
-   gravity_scale=1.0       # 重力缩放因子
    is_debug=false         # 调试开关
    ```
 

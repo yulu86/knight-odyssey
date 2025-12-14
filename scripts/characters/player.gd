@@ -7,7 +7,6 @@ var acceleration: float
 var floor_friction: float
 var air_friction: float
 var jump_velocity: float  # 跳跃初速度
-var gravity_scale: float = 1.0
 
 ## 调试参数 - 保留在检查器中可配置
 @export var is_debug: bool = false
@@ -37,7 +36,6 @@ func load_player_config() -> void:
 	floor_friction = ConfigManager.get_player_value("floor_friction", 1200.0)
 	air_friction = ConfigManager.get_player_value("air_friction", 1800.0)
 	jump_velocity = ConfigManager.get_player_value("jump_velocity", -320.0)
-	gravity_scale = ConfigManager.get_player_value("gravity_scale", 1.0)
 	is_debug = ConfigManager.get_player_value("is_debug", false)
 
 
