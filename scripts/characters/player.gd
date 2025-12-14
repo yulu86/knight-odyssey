@@ -21,7 +21,7 @@ func _ready() -> void:
 	# 初始化状态机
 	player_components = PlayerComponents.new()
 	player_components.setup(self, sprite, animation_player)
-	state_machine.init(self, player_components)
+	state_machine.init(player_components)
 
 
 ## 更新 - 处理逻辑

@@ -16,13 +16,11 @@ var current_state: State
 var current_player_state: PlayerState
 var state_factory: PlayerStateFactory
 ## 玩家引用
-var player: Player
 var player_components: PlayerComponents
 
 
 ## 初始化状态机
-func init(context_player: Player, context_player_components: PlayerComponents) -> void:
-	player = context_player
+func init(context_player_components: PlayerComponents) -> void:
 	player_components = context_player_components
 	state_factory = PlayerStateFactory.new()
 
