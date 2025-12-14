@@ -30,9 +30,14 @@ func exit() -> void:
 
 
 ## 虚方法 - 每帧更新
-func update(_delta: float) -> void:
-	# 子类实现具体逻辑
-	pass
+func update(delta: float) -> void:
+	var input_direction := get_input_direction()
+
+	# 玩家移动
+	move(input_direction, delta)
+
+	# 更新精灵朝向
+	update_sprite_facing(input_direction)
 
 
 ## 虚方法 - 输入处理
@@ -58,6 +63,7 @@ func move(input_direction: float, delta: float) -> void:
 
 
 ## 移动处理 - 更新速度和移动
+# 子类扩展实现具体逻辑
 func update_velocity(player_velocity: Vector2, input_direction: float, delta: float) -> Vector2:
 	# 计算目标速度
 	var horizontal_velocity: float = input_direction * player.move_speed

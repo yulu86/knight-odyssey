@@ -22,11 +22,7 @@ func update(delta: float) -> void:
 	if not has_input_direction(input_direction):
 		state_changed.emit(PlayerStateMachine.State.IDLE)
 
-	# 应用移动
-	move(input_direction, delta)
-
-	# 更新精灵朝向
-	update_sprite_facing(input_direction)
+	super.update(delta)
 
 
 ## 输入处理

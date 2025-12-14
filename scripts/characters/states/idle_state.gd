@@ -19,8 +19,7 @@ func update(delta: float) -> void:
 	if has_input_direction():
 		state_changed.emit(PlayerStateMachine.State.WALK)
 
-	# 应用摩擦力使角色停止
-	move(0.0, delta)
+	super.update(delta)
 
 
 ## 输入处理
