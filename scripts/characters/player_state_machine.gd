@@ -17,11 +17,13 @@ var current_player_state: PlayerState
 var state_factory: PlayerStateFactory
 ## 玩家引用
 var player: Player
+var player_components: PlayerComponents
 
 
 ## 初始化状态机
-func init(player_node: Player) -> void:
-	player = player_node
+func init(context_player: Player, context_player_components: PlayerComponents) -> void:
+	player = context_player
+	player_components = context_player_components
 	state_factory = PlayerStateFactory.new()
 
 	# 设置初始状态为IDLE
@@ -56,7 +58,7 @@ func change_state(new_state: State) -> void:
 	# 新状态初始化
 	current_state = new_state
 	current_player_state = state_factory.get_state(new_state)
-	current_player_state.init(player)
+	current_player_state.init(player, player_components)
 	current_player_state.state_changed.connect(change_state)
 
 	# 进入新状态

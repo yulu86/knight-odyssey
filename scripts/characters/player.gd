@@ -5,7 +5,7 @@ extends CharacterBody2D
 @export var move_speed: float = 150.0
 @export var acceleration: float = 300.0
 @export var friction: float = 1200.0
-@export var jump_velocity: float = -240.0  # 跳跃初速度
+@export var jump_velocity: float = -320.0  # 跳跃初速度
 
 ## 私有变量
 var gravity: float  # 从项目设置获取的重力
@@ -15,12 +15,16 @@ var gravity: float  # 从项目设置获取的重力
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var state_machine: PlayerStateMachine = $PlayerStateMachine
 
+var player_components: PlayerComponents
+
 ## 初始化
 func _ready() -> void:
 	# 获取Godot默认重力设置
 	gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 	# 初始化状态机
-	state_machine.init(self)
+	player_components = PlayerComponents.new()
+	player_components.setup(self, animation_player)
+	state_machine.init(self, player_components)
 
 
 ## 更新 - 处理逻辑
