@@ -41,7 +41,7 @@ ultrathink 请根据游戏GDD文档和架构概要设计文档，创建sprint开
 约束：
 - 禁止输出详细实现代码 
 参考文档:
-- 游戏需求GDD: docs/01_GDD/01_游戏设计文档_骑士的奥德赛大冒险.md
+- 游戏需求GDD: docs/01_GDD/01_游戏架构概要设计_骑士的奥德赛大冒险.md
 - 游戏架构概要设计: docs/02_arch/01_游戏架构概要设计_骑士的奥德赛大冒险.md
 - story模版: docs/99_prompts/templates/STORY.md
 ```
