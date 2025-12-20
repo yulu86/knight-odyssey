@@ -51,7 +51,7 @@ ultrathink 请根据游戏GDD文档和架构概要设计文档，创建sprint开
 # 4. Story手把手开发指导
 
 ```
-ultrathink use context7 请分析并输出下一个待开发的Story的手把手开发指导:
+ultrathink 请分析并输出下一个待开发的Story的手把手开发指导:
 1. 读取backlog文档，获取下一个待开发的Story，并找我确认
 2. 等待我的确认
 3. 读取Story文档和游戏架构概要设计
@@ -91,7 +91,7 @@ ultrathink use context7 请分析并输出下一个待开发的Story的手把手
 # 5. Story协同开发
 
 ```
-use context7 请与我与我协开发:
+请与我与我协开发:
 1. 切换到开发分支
 2. 读取手把手开发指导
 3. 严格遵守指导，使用`godot-developer`技能与我协同开发，在需要我手动操作时，输出详细操作指导，并暂停执行
