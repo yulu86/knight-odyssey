@@ -62,23 +62,13 @@ ultrathink 请分析并输出下一个待开发的Story的手把手开发指导:
 - 请严格遵守游戏架构概要设计
 - 输出的设计和指导中只需要包含代码框架, 例如：类、方法的签名(方法名、参入、返回值)设计
 - 需要我执行的操作，请在手把手指导中给出详细说明
+- 输出到一份文档中
+- 每个章节需要指定责任人(AI助手/用户)
 约束：
 - 必须使用`godot-developer`技能设计并输出指导
 - 开发过程必须严格遵守TDD方法论
 - 仅输出设计和指导，禁止编写代码
-- 指导中禁止包含详细实现代码，例如
-    ```gdscript
-    func _physics_process(delta: float) -> void:
-        # 处理输入
-        var input_direction = Input.get_axis("move_left", "move_right")
-
-        # 更新状态机
-        state_machine.physics_update(delta)
-
-        # 处理朝向（确保始终面向正确方向）
-        if velocity.x != 0:
-            sprite.flip_h = velocity.x < 0
-    ```
+- 指导中禁止包含详细实现代码
 参考文档：
 - backlog：docs/03_sprint/01_backlog.md
 - 游戏需求GDD: docs/01_GDD/01_游戏设计文档_骑士的奥德赛大冒险.md
