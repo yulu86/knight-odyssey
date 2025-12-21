@@ -86,10 +86,6 @@ ultrathink 请分析并输出下一个待开发的Story的手把手开发指导:
 - 必须遵守上下文和技能中声明的宪法(不可协商)
 - 开发过程必须严格遵守TDD方法论
 - 开发分支名称：{story id}_{story名称英文名，中划线连接单词}, 例如： US_20251207153000_01_Player-Basic-Movement
-- GUT测试执行必须使用命令行
 - 代码实现后，调整方法中的注释，以增加代码可读性
 - 每个微循环执行完成后，暂停执行，等待我代码检视
-- 代码中除了注释外，禁止使用中文
-参考：
-- godot命令对应的可执行文件 `E:\Steam\steamapps\common\Godot Engine\godot.windows.opt.tools.64.exe`，例如 ```godot -s addons/gut/gut_cmdln.gd -gexit``` -> ```E:\Steam\steamapps\common\Godot Engine\godot.windows.opt.tools.64.exe -s addons/gut/gut_cmdln.gd -gexit```
 ```
