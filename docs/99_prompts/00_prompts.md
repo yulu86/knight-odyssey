@@ -58,9 +58,16 @@ ultrathink 请分析并输出下一个待开发的Story的手把手开发指导:
 6. 等我确认准确无误后，输出手把手详细TDD开发指导到 docs/04_hands_by_hands/ 
 要求:
 - 输出到一份文档中
+- 不要完全隔离测试和实现的步骤，而是严格使用TDD微循环
 约束：
 - 必须使用`godot-developer`技能设计并输出指导
-- 仅输出设计和指导，禁止编写代码
+- 仅输出设计和指导，禁止编写代码(可以用TODO的方式描述，例如
+   ```
+   func create_state(state_type: PlayerStateMachine.State) -> PlayerState:
+    # TODO: 创建状态实例
+    # - 根据类型返回对应状态
+    pass
+   ```)
 - 指导中禁止包含详细实现代码，只需要方法签名
 ```
 
