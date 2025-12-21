@@ -76,19 +76,15 @@ ultrathink 请分析并输出下一个待开发的Story的手把手开发指导:
 # 5. Story协同开发
 
 ```
-请与我与我协开发:
-1. 切换到开发分支
-2. 读取手把手开发指导
-3. 严格遵守指导，使用`godot-developer`技能与我协同开发，在需要我手动操作时，输出详细操作指导，并暂停执行
-4. 等待我确认开发完成
-5. 输出测试指导，并暂停执行
-6. 等待我反馈测试结果
-7. 更新backlog中的进展
-8. 提醒我提交代码
+请与我与我协同开发:
+1. 从 docs/04_hands_by_hands/ 下获取待开发的指导，并与我确认
+2. 等待我确认后，切换到开发分支
+3. 严格遵守`手把手开发指导`，使用`godot-developer`技能与我协同开发
+要求：
+- A good strategy with GUT is to separate unit and integration tests into separate directory structures (such as res://test/unit and res://test/integration).
 约束：
 - 必须遵守上下文和技能中声明的宪法(不可协商)
 - 开发过程必须严格遵守TDD方法论
 - 开发分支名称：{story id}_{story名称英文名，中划线连接单词}, 例如： US_20251207153000_01_Player-Basic-Movement
-参考文档：
-- 手把手开发指导: docs/04_hands_by_hands/KO_20251216_011_游戏管理器核心框架_TDD开发指导.md
+- GUT测试执行必须使用命令行
 ```
