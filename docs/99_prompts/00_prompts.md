@@ -85,8 +85,9 @@ ultrathink 请分析并输出下一个待开发的Story的手把手开发指导:
 - A good strategy with GUT is to separate unit and integration tests into separate directory structures (such as res://test/unit and res://test/integration).
 约束：
 - 必须遵守上下文和技能中声明的宪法(不可协商)
-- 开发过程必须严格遵守TDD方法论
+- 开发过程必须严格遵守TDD方法论，使用微循环小步快跑
 - 开发分支名称：{story id}_{story名称英文名，中划线连接单词}, 例如： US_20251207153000_01_Player-Basic-Movement
 - 代码实现后，调整方法中的注释，以增加代码可读性
+- 每个task开发前，给我展示task开发的目标，并暂停等待我确认
 - 每个task开发完成后，暂停执行，等待我代码检视
 ```
