@@ -2,7 +2,6 @@ extends GutTest
 
 # Input Map Configuration Test
 # 测试输入映射配置是否正确
-class_name TestInputConfig
 
 var test_actions = ["move_left", "move_right", "jump"]
 

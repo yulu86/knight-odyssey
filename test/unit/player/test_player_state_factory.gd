@@ -2,7 +2,6 @@ extends GutTest
 
 # PlayerStateFactory Test
 # Test the factory for creating and managing player states
-class_name TestPlayerStateFactory
 
 const PlayerStateFile = preload("res://scripts/player/player_state.gd")
 

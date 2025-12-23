@@ -2,7 +2,6 @@ extends GutTest
 
 # PlayerState Enum Test
 # Test player state enum declaration and usage
-class_name TestPlayerState
 
 # Preload the player state enum file
 const PlayerStateFile = preload("res://scripts/player/player_state.gd")

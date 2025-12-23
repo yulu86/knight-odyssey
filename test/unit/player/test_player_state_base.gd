@@ -2,7 +2,6 @@ extends GutTest
 
 # PlayerStateBase Test
 # Test the base class for all player states
-class_name TestPlayerStateBase
 
 const PlayerStateFile = preload("res://scripts/player/player_state.gd")
 

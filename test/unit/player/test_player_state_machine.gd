@@ -2,7 +2,6 @@ extends GutTest
 
 # PlayerStateMachine Test
 # Test the player state machine functionality
-class_name TestPlayerStateMachine
 
 const PlayerStateFile = preload("res://scripts/player/player_state.gd")
 

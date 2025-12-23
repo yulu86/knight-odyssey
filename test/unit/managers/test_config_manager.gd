@@ -2,7 +2,6 @@ extends GutTest
 
 # ConfigManager Test
 # 测试配置管理器功能
-class_name TestConfigManager
 
 var ConfigManagerClass = load("res://scripts/managers/config_manager.gd")
 var config_manager: ConfigManager

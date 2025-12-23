@@ -2,7 +2,6 @@ extends GutTest
 
 # Player Scene Structure Test
 # 测试 Player 场景结构是否正确
-class_name TestPlayerScene
 
 const PLAYER_SCENE_PATH = "res://scenes/player/player.tscn"
 
