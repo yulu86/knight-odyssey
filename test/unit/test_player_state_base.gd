@@ -1,0 +1,114 @@
+extends GutTest
+
+# PlayerStateBase Test
+# Test the base class for all player states
+class_name TestPlayerStateBase
+
+const PlayerStateFile = preload("res://scripts/player/player_state.gd")
+
+var _test_state: PlayerStateBase = null
+
+
+func before_each():
+	_test_state = PlayerStateBase.new()
+
+
+func after_each():
+	if _test_state != null:
+		_test_state.queue_free()
+	_test_state = null
+
+
+func test_player_state_base_class_exists():
+	# Test that PlayerStateBase class exists
+	assert_not_null(_test_state, "PlayerStateBase class should exist")
+
+
+func test_player_state_base_is_node():
+	# Test that PlayerStateBase extends Node
+	assert_is(_test_state, Node, "PlayerStateBase should extend Node")
+
+
+func test_player_state_base_has_state_machine_property():
+	# Test that PlayerStateBase has state_machine property
+	assert_not_null(_test_state, "PlayerStateBase instance should exist")
+	# Property should exist and be assignable to a Node
+	var dummy_machine = Node.new()
+	_test_state.state_machine = dummy_machine
+	assert_eq(_test_state.state_machine, dummy_machine, "PlayerStateBase should have state_machine property")
+	dummy_machine.queue_free()
+
+
+func test_player_state_base_has_character_property():
+	# Test that PlayerStateBase has character property
+	assert_not_null(_test_state, "PlayerStateBase instance should exist")
+	# Property should exist and be assignable to a CharacterBody2D
+	var dummy_character = CharacterBody2D.new()
+	_test_state.character = dummy_character
+	assert_eq(_test_state.character, dummy_character, "PlayerStateBase should have character property")
+	dummy_character.queue_free()
+
+
+func test_player_state_base_has_state_type_property():
+	# Test that PlayerStateBase has state_type property
+	assert_not_null(_test_state, "PlayerStateBase instance should exist")
+	# Property should exist and be assignable to an int (enum)
+	_test_state.state_type = PlayerStateFile.PlayerState.IDLE
+	assert_eq(_test_state.state_type, PlayerStateFile.PlayerState.IDLE, "PlayerStateBase should have state_type property")
+
+
+func test_player_state_base_has_enter_method():
+	# Test that PlayerStateBase has enter method
+	assert_not_null(_test_state, "PlayerStateBase instance should exist")
+	# enter should be callable without errors
+	_test_state.enter()
+
+
+func test_player_state_base_has_exit_method():
+	# Test that PlayerStateBase has exit method
+	assert_not_null(_test_state, "PlayerStateBase instance should exist")
+	# exit should be callable without errors
+	_test_state.exit()
+
+
+func test_player_state_base_has_process_method():
+	# Test that PlayerStateBase has process method
+	assert_not_null(_test_state, "PlayerStateBase instance should exist")
+	# process should be callable with delta parameter
+	_test_state.process(0.016)
+
+
+func test_player_state_base_has_physics_process_method():
+	# Test that PlayerStateBase has physics_process method
+	assert_not_null(_test_state, "PlayerStateBase instance should exist")
+	# physics_process should be callable with delta parameter
+	_test_state.physics_process(0.016)
+
+
+func test_player_state_base_has_handle_input_method():
+	# Test that PlayerStateBase has handle_input method
+	assert_not_null(_test_state, "PlayerStateBase instance should exist")
+	# handle_input should be callable with event parameter
+	var event = InputEventKey.new()
+	_test_state.handle_input(event)
+
+
+func test_player_state_base_state_type_defaults_to_invalid():
+	# Test that state_type defaults to -1 (invalid state)
+	var new_state = PlayerStateBase.new()
+	assert_eq(new_state.state_type, -1, "state_type should default to -1")
+	new_state.queue_free()
+
+
+func test_player_state_base_state_machine_initially_null():
+	# Test that state_machine is initially null
+	var new_state = PlayerStateBase.new()
+	assert_null(new_state.state_machine, "state_machine should be null initially")
+	new_state.queue_free()
+
+
+func test_player_state_base_character_initially_null():
+	# Test that character is initially null
+	var new_state = PlayerStateBase.new()
+	assert_null(new_state.character, "character should be null initially")
+	new_state.queue_free()
