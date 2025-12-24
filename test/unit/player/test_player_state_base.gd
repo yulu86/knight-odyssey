@@ -46,14 +46,6 @@ func test_player_state_base_has_character_property():
 	dummy_character.queue_free()
 
 
-func test_player_state_base_has_state_type_property():
-	# Test that PlayerStateBase has state_type property
-	assert_not_null(_test_state, "PlayerStateBase instance should exist")
-	# Property should exist and be assignable to an int (enum)
-	_test_state.state_type = PlayerState.State.IDLE
-	assert_eq(_test_state.state_type, PlayerState.State.IDLE, "PlayerStateBase should have state_type property")
-
-
 func test_player_state_base_has_enter_method():
 	# Test that PlayerStateBase has enter method
 	assert_not_null(_test_state, "PlayerStateBase instance should exist")
@@ -73,13 +65,6 @@ func test_player_state_base_has_process_method():
 	assert_not_null(_test_state, "PlayerStateBase instance should exist")
 	# process should be callable with delta parameter
 	_test_state.process(0.016)
-
-
-func test_player_state_base_state_type_defaults_to_invalid():
-	# Test that state_type defaults to -1 (invalid state)
-	var new_state = PlayerStateBase.new()
-	assert_eq(new_state.state_type, -1, "state_type should default to -1")
-	new_state.queue_free()
 
 
 func test_player_state_base_state_machine_initially_null():

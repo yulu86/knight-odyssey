@@ -5,13 +5,9 @@
 class_name IdleState
 extends PlayerStateBase
 
-## Transition flag to indicate state change
-## Should be checked by state machine to determine next state
-var transition_state: int = -1
-
 
 func _init() -> void:
-	state_type = PlayerState.State.IDLE
+	pass
 
 
 func enter() -> void:
@@ -29,7 +25,5 @@ func process(_delta: float) -> void:
 	# Check for movement input
 	if character != null:
 		var direction = Input.get_axis("move_left", "move_right")
-		if direction != 0:
-			transition_state = PlayerState.State.MOVE
-		else:
-			transition_state = -1
+		if not is_zero_approx(direction):
+			transition_state(PlayerState.State.MOVE)

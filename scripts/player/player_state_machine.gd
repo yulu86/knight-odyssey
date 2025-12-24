@@ -39,6 +39,7 @@ func change_state(state_type: int) -> void:
 	current_state = new_state
 	current_state.state_machine = self
 	current_state.character = character
+	current_state.state_changed.connect(change_state)
 	current_state.enter()
 
 

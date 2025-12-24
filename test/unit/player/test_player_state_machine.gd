@@ -53,7 +53,6 @@ func test_player_state_machine_has_states_factory():
 func test_player_state_machine_has_character_property():
 	# Test that PlayerStateMachine has character property
 	assert_not_null(_test_machine, "PlayerStateMachine instance should exist")
-	_test_machine.character = _mock_character
 	assert_eq(_test_machine.character, _mock_character, "PlayerStateMachine should have character property")
 
 

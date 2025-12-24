@@ -6,11 +6,12 @@ class_name Player
 
 @onready var sprite_2d: Sprite2D = $Sprite2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var player_state_machine: PlayerStateMachine = $PlayerStateMachine
 
 
 func _ready() -> void:
-	# Called when the node enters the scene tree for the first time.
-	pass
+	player_state_machine.character = self
+	player_state_machine.change_state(PlayerState.State.IDLE)
 
 
 func _process(_delta: float) -> void:
