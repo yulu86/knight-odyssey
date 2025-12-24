@@ -13,6 +13,6 @@ func _ready() -> void:
 	pass
 
 
-func _physics_process(delta: float) -> void:
-	# Called every physics frame
+func _process(_delta: float) -> void:
+	# Called every frame
 	pass

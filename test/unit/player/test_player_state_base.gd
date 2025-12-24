@@ -3,8 +3,6 @@ extends GutTest
 # PlayerStateBase Test
 # Test the base class for all player states
 
-const PlayerStateFile = preload("res://scripts/player/player_state.gd")
-
 var _test_state: PlayerStateBase = null
 
 
@@ -52,8 +50,8 @@ func test_player_state_base_has_state_type_property():
 	# Test that PlayerStateBase has state_type property
 	assert_not_null(_test_state, "PlayerStateBase instance should exist")
 	# Property should exist and be assignable to an int (enum)
-	_test_state.state_type = PlayerStateFile.PlayerState.IDLE
-	assert_eq(_test_state.state_type, PlayerStateFile.PlayerState.IDLE, "PlayerStateBase should have state_type property")
+	_test_state.state_type = PlayerState.State.IDLE
+	assert_eq(_test_state.state_type, PlayerState.State.IDLE, "PlayerStateBase should have state_type property")
 
 
 func test_player_state_base_has_enter_method():
@@ -75,21 +73,6 @@ func test_player_state_base_has_process_method():
 	assert_not_null(_test_state, "PlayerStateBase instance should exist")
 	# process should be callable with delta parameter
 	_test_state.process(0.016)
-
-
-func test_player_state_base_has_physics_process_method():
-	# Test that PlayerStateBase has physics_process method
-	assert_not_null(_test_state, "PlayerStateBase instance should exist")
-	# physics_process should be callable with delta parameter
-	_test_state.physics_process(0.016)
-
-
-func test_player_state_base_has_handle_input_method():
-	# Test that PlayerStateBase has handle_input method
-	assert_not_null(_test_state, "PlayerStateBase instance should exist")
-	# handle_input should be callable with event parameter
-	var event = InputEventKey.new()
-	_test_state.handle_input(event)
 
 
 func test_player_state_base_state_type_defaults_to_invalid():

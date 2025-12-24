@@ -3,7 +3,6 @@ extends GutTest
 # PlayerStateFactory Test
 # Test the factory for creating and managing player states
 
-const PlayerStateFile = preload("res://scripts/player/player_state.gd")
 
 var _test_factory: PlayerStateFactory = null
 
@@ -37,23 +36,23 @@ func test_player_state_factory_has_states_dictionary():
 func test_player_state_factory_has_register_state_method():
 	# Test that PlayerStateFactory has register_state method
 	var test_state = PlayerStateBase.new()
-	_test_factory.register_state(PlayerStateFile.PlayerState.IDLE, test_state)
-	assert_true(_test_factory.states.has(PlayerStateFile.PlayerState.IDLE), "register_state should add state to dictionary")
+	_test_factory.register_state(PlayerState.State.IDLE, test_state)
+	assert_true(_test_factory.states.has(PlayerState.State.IDLE), "register_state should add state to dictionary")
 	test_state.queue_free()
 
 
 func test_player_state_factory_has_get_state_method():
 	# Test that PlayerStateFactory has get_state method
 	# Should return null for non-existent state
-	var result = _test_factory.get_state(PlayerStateFile.PlayerState.IDLE)
+	var result = _test_factory.get_state(PlayerState.State.IDLE)
 	assert_null(result, "get_state should return null for non-existent state")
 
 
 func test_player_state_factory_can_retrieve_registered_state():
 	# Test that registered state can be retrieved
 	var test_state = PlayerStateBase.new()
-	_test_factory.register_state(PlayerStateFile.PlayerState.IDLE, test_state)
-	var retrieved = _test_factory.get_state(PlayerStateFile.PlayerState.IDLE)
+	_test_factory.register_state(PlayerState.State.IDLE, test_state)
+	var retrieved = _test_factory.get_state(PlayerState.State.IDLE)
 	assert_eq(retrieved, test_state, "Should retrieve registered state")
 	test_state.queue_free()
 
@@ -69,11 +68,11 @@ func test_player_state_factory_can_store_multiple_states():
 	var idle_state = PlayerStateBase.new()
 	var move_state = PlayerStateBase.new()
 
-	_test_factory.register_state(PlayerStateFile.PlayerState.IDLE, idle_state)
-	_test_factory.register_state(PlayerStateFile.PlayerState.MOVE, move_state)
+	_test_factory.register_state(PlayerState.State.IDLE, idle_state)
+	_test_factory.register_state(PlayerState.State.MOVE, move_state)
 
-	assert_eq(_test_factory.get_state(PlayerStateFile.PlayerState.IDLE), idle_state, "Should retrieve IDLE state")
-	assert_eq(_test_factory.get_state(PlayerStateFile.PlayerState.MOVE), move_state, "Should retrieve MOVE state")
+	assert_eq(_test_factory.get_state(PlayerState.State.IDLE), idle_state, "Should retrieve IDLE state")
+	assert_eq(_test_factory.get_state(PlayerState.State.MOVE), move_state, "Should retrieve MOVE state")
 
 	idle_state.queue_free()
 	move_state.queue_free()
@@ -84,10 +83,10 @@ func test_player_state_factory_overwrites_existing_state():
 	var first_state = PlayerStateBase.new()
 	var second_state = PlayerStateBase.new()
 
-	_test_factory.register_state(PlayerStateFile.PlayerState.IDLE, first_state)
-	_test_factory.register_state(PlayerStateFile.PlayerState.IDLE, second_state)
+	_test_factory.register_state(PlayerState.State.IDLE, first_state)
+	_test_factory.register_state(PlayerState.State.IDLE, second_state)
 
-	var retrieved = _test_factory.get_state(PlayerStateFile.PlayerState.IDLE)
+	var retrieved = _test_factory.get_state(PlayerState.State.IDLE)
 	assert_eq(retrieved, second_state, "Second registration should overwrite first")
 
 	first_state.queue_free()

@@ -48,11 +48,3 @@ func change_state(state_type: int) -> void:
 func process(delta: float) -> void:
 	if current_state != null:
 		current_state.process(delta)
-
-
-## Physics process the current state
-## 物理处理当前状态
-## @param delta: Time since the last physics frame
-func physics_process(delta: float) -> void:
-	if current_state != null:
-		current_state.physics_process(delta)

@@ -33,17 +33,3 @@ func exit() -> void:
 ## @param delta: Time since the last frame
 func process(delta: float) -> void:
 	pass
-
-
-## Called every physics frame
-## 每个物理帧调用
-## @param delta: Time since the last physics frame
-func physics_process(delta: float) -> void:
-	pass
-
-
-## Handle input events
-## 处理输入事件
-## @param event: The input event to handle
-func handle_input(event: InputEvent) -> void:
-	pass

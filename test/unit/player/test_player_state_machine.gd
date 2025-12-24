@@ -3,7 +3,6 @@ extends GutTest
 # PlayerStateMachine Test
 # Test the player state machine functionality
 
-const PlayerStateFile = preload("res://scripts/player/player_state.gd")
 
 var _test_machine: PlayerStateMachine = null
 var _mock_character: CharacterBody2D = null
@@ -66,16 +65,16 @@ func test_player_state_machine_factory_is_player_state_factory():
 
 func test_player_state_machine_change_state():
 	# Test that state machine can change states
-	_test_machine.states_factory.register_state(PlayerStateFile.PlayerState.IDLE, _mock_state)
-	_test_machine.change_state(PlayerStateFile.PlayerState.IDLE)
+	_test_machine.states_factory.register_state(PlayerState.State.IDLE, _mock_state)
+	_test_machine.change_state(PlayerState.State.IDLE)
 	assert_eq(_test_machine.current_state, _mock_state, "current_state should be changed to new state")
 
 
 func test_player_state_machine_calls_enter_on_state_change():
 	# Test that enter is called when changing state
 	var test_state = TestTrackingState.new()
-	_test_machine.states_factory.register_state(PlayerStateFile.PlayerState.IDLE, test_state)
-	_test_machine.change_state(PlayerStateFile.PlayerState.IDLE)
+	_test_machine.states_factory.register_state(PlayerState.State.IDLE, test_state)
+	_test_machine.change_state(PlayerState.State.IDLE)
 	assert_true(test_state.enter_called, "enter should be called when changing state")
 	test_state.queue_free()
 
@@ -85,13 +84,13 @@ func test_player_state_machine_calls_exit_on_previous_state():
 	var first_state = TestTrackingState.new()
 	var second_state = TestTrackingState.new()
 
-	_test_machine.states_factory.register_state(PlayerStateFile.PlayerState.IDLE, first_state)
-	_test_machine.states_factory.register_state(PlayerStateFile.PlayerState.MOVE, second_state)
+	_test_machine.states_factory.register_state(PlayerState.State.IDLE, first_state)
+	_test_machine.states_factory.register_state(PlayerState.State.MOVE, second_state)
 
-	_test_machine.change_state(PlayerStateFile.PlayerState.IDLE)
+	_test_machine.change_state(PlayerState.State.IDLE)
 	assert_true(first_state.enter_called, "enter should be called on first state")
 
-	_test_machine.change_state(PlayerStateFile.PlayerState.MOVE)
+	_test_machine.change_state(PlayerState.State.MOVE)
 	assert_true(first_state.exit_called, "exit should be called on first state")
 	assert_true(second_state.enter_called, "enter should be called on second state")
 
@@ -101,32 +100,24 @@ func test_player_state_machine_calls_exit_on_previous_state():
 
 func test_player_state_machine_has_process_method():
 	# Test that PlayerStateMachine has process method
-	_test_machine.states_factory.register_state(PlayerStateFile.PlayerState.IDLE, _mock_state)
-	_test_machine.change_state(PlayerStateFile.PlayerState.IDLE)
+	_test_machine.states_factory.register_state(PlayerState.State.IDLE, _mock_state)
+	_test_machine.change_state(PlayerState.State.IDLE)
 	_test_machine.process(0.016)
 	assert_true(true, "process method should be callable")
 
 
-func test_player_state_machine_has_physics_process_method():
-	# Test that PlayerStateMachine has physics_process method
-	_test_machine.states_factory.register_state(PlayerStateFile.PlayerState.IDLE, _mock_state)
-	_test_machine.change_state(PlayerStateFile.PlayerState.IDLE)
-	_test_machine.physics_process(0.016)
-	assert_true(true, "physics_process method should be callable")
-
-
 func test_player_state_machine_sets_character_on_state():
 	# Test that character is set on state when changing
-	_test_machine.states_factory.register_state(PlayerStateFile.PlayerState.IDLE, _mock_state)
+	_test_machine.states_factory.register_state(PlayerState.State.IDLE, _mock_state)
 	_test_machine.character = _mock_character
-	_test_machine.change_state(PlayerStateFile.PlayerState.IDLE)
+	_test_machine.change_state(PlayerState.State.IDLE)
 	assert_eq(_mock_state.character, _mock_character, "character should be set on state")
 
 
 func test_player_state_machine_sets_state_machine_on_state():
 	# Test that state_machine is set on state when changing
-	_test_machine.states_factory.register_state(PlayerStateFile.PlayerState.IDLE, _mock_state)
-	_test_machine.change_state(PlayerStateFile.PlayerState.IDLE)
+	_test_machine.states_factory.register_state(PlayerState.State.IDLE, _mock_state)
+	_test_machine.change_state(PlayerState.State.IDLE)
 	assert_eq(_mock_state.state_machine, _test_machine, "state_machine should be set on state")
 
 
@@ -140,20 +131,10 @@ func test_player_state_machine_handles_null_state_gracefully():
 func test_player_state_machine_forwards_process_to_current_state():
 	# Test that process is forwarded to current state
 	var test_state = TestTrackingState.new()
-	_test_machine.states_factory.register_state(PlayerStateFile.PlayerState.IDLE, test_state)
-	_test_machine.change_state(PlayerStateFile.PlayerState.IDLE)
+	_test_machine.states_factory.register_state(PlayerState.State.IDLE, test_state)
+	_test_machine.change_state(PlayerState.State.IDLE)
 	_test_machine.process(0.016)
 	assert_true(test_state.process_called, "process should be forwarded to current state")
-	test_state.queue_free()
-
-
-func test_player_state_machine_forwards_physics_process_to_current_state():
-	# Test that physics_process is forwarded to current state
-	var test_state = TestTrackingState.new()
-	_test_machine.states_factory.register_state(PlayerStateFile.PlayerState.IDLE, test_state)
-	_test_machine.change_state(PlayerStateFile.PlayerState.IDLE)
-	_test_machine.physics_process(0.016)
-	assert_true(test_state.physics_process_called, "physics_process should be forwarded to current state")
 	test_state.queue_free()
 
 
@@ -162,7 +143,6 @@ class TestTrackingState extends PlayerStateBase:
 	var enter_called: bool = false
 	var exit_called: bool = false
 	var process_called: bool = false
-	var physics_process_called: bool = false
 
 	func enter() -> void:
 		super.enter()
@@ -175,7 +155,3 @@ class TestTrackingState extends PlayerStateBase:
 	func process(delta: float) -> void:
 		super.process(delta)
 		process_called = true
-
-	func physics_process(delta: float) -> void:
-		super.physics_process(delta)
-		physics_process_called = true
