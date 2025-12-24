@@ -6,6 +6,9 @@ extends Node
 class_name PlayerStateBase
 
 
+## Signal emitted when requesting a state transition
+## 发出状态转换请求时触发此信号
+## @param to_state: The target state to transition to
 signal state_changed(to_state: PlayerState.State)
 
 
@@ -35,5 +38,8 @@ func process(_delta: float) -> void:
 	pass
 
 
+## Request a transition to another state
+## 请求转换到另一个状态
+## @param to_state: The target state to transition to
 func transition_state(to_state: PlayerState.State) -> void:
 	state_changed.emit(to_state)
