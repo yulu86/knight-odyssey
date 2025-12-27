@@ -116,13 +116,6 @@ func test_player_state_machine_sets_components_on_state():
 	assert_eq(_mock_state.components, _mock_components, "components should be set on state")
 
 
-func test_player_state_machine_sets_state_machine_on_state():
-	# Test that state_machine is set on state when changing
-	_test_machine.states_factory.register_state(PlayerState.State.IDLE, _mock_state)
-	_test_machine.change_state(PlayerState.State.IDLE)
-	assert_eq(_mock_state.state_machine, _test_machine, "state_machine should be set on state")
-
-
 func test_player_state_machine_handles_null_state_gracefully():
 	# Test that changing to non-existent state doesn't crash
 	# The warning is expected behavior for invalid state

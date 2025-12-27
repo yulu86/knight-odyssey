@@ -37,7 +37,6 @@ func change_state(state_type: int) -> void:
 
 	# Set up the new state
 	current_state = new_state
-	current_state.state_machine = self
 	current_state.components = components
 	current_state.state_changed.connect(change_state)
 	current_state.enter()

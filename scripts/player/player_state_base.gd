@@ -12,9 +12,6 @@ class_name PlayerStateBase
 signal state_changed(to_state: PlayerState.State)
 
 
-## Reference to the player state machine managing this state
-var state_machine: Node = null
-
 ## Reference to the player components this state operates on
 var components: PlayerComponents = null
 
