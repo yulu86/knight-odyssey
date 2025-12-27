@@ -5,14 +5,16 @@ extends GutTest
 
 
 var _test_machine: PlayerStateMachine = null
-var _mock_character: CharacterBody2D = null
+var _mock_player: Player = null
+var _mock_components: PlayerComponents = null
 var _mock_state: PlayerStateBase = null
 
 
 func before_each():
-	_mock_character = CharacterBody2D.new()
+	_mock_player = Player.new()
+	_mock_components = PlayerComponents.new(_mock_player)
 	_test_machine = PlayerStateMachine.new()
-	_test_machine.character = _mock_character
+	_test_machine.components = _mock_components
 	_mock_state = PlayerStateBase.new()
 
 
@@ -21,11 +23,12 @@ func after_each():
 		_mock_state.queue_free()
 	if _test_machine != null:
 		_test_machine.queue_free()
-	if _mock_character != null:
-		_mock_character.queue_free()
+	if _mock_player != null:
+		_mock_player.queue_free()
 	_mock_state = null
 	_test_machine = null
-	_mock_character = null
+	_mock_player = null
+	_mock_components = null
 
 
 func test_player_state_machine_class_exists():
@@ -50,10 +53,10 @@ func test_player_state_machine_has_states_factory():
 	assert_not_null(_test_machine.states_factory, "PlayerStateMachine should have states_factory")
 
 
-func test_player_state_machine_has_character_property():
-	# Test that PlayerStateMachine has character property
+func test_player_state_machine_has_components_property():
+	# Test that PlayerStateMachine has components property
 	assert_not_null(_test_machine, "PlayerStateMachine instance should exist")
-	assert_eq(_test_machine.character, _mock_character, "PlayerStateMachine should have character property")
+	assert_eq(_test_machine.components, _mock_components, "PlayerStateMachine should have components property")
 
 
 func test_player_state_machine_factory_is_player_state_factory():
@@ -105,12 +108,12 @@ func test_player_state_machine_has_process_method():
 	assert_true(true, "process method should be callable")
 
 
-func test_player_state_machine_sets_character_on_state():
-	# Test that character is set on state when changing
+func test_player_state_machine_sets_components_on_state():
+	# Test that components is set on state when changing
 	_test_machine.states_factory.register_state(PlayerState.State.IDLE, _mock_state)
-	_test_machine.character = _mock_character
+	_test_machine.components = _mock_components
 	_test_machine.change_state(PlayerState.State.IDLE)
-	assert_eq(_mock_state.character, _mock_character, "character should be set on state")
+	assert_eq(_mock_state.components, _mock_components, "components should be set on state")
 
 
 func test_player_state_machine_sets_state_machine_on_state():

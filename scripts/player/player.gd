@@ -10,8 +10,10 @@ class_name Player
 
 
 func _ready() -> void:
-	player_state_machine.character = self
-	player_state_machine.change_state(PlayerState.State.IDLE)
+	if player_state_machine != null:
+		var components = PlayerComponents.new(self)
+		player_state_machine.components = components
+		player_state_machine.change_state(PlayerState.State.IDLE)
 
 
 func _process(_delta: float) -> void:

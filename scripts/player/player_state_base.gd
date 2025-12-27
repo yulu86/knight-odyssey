@@ -15,8 +15,8 @@ signal state_changed(to_state: PlayerState.State)
 ## Reference to the player state machine managing this state
 var state_machine: Node = null
 
-## Reference to the player character this state operates on
-var character: CharacterBody2D = null
+## Reference to the player components this state operates on
+var components: PlayerComponents = null
 
 
 ## Called when entering this state

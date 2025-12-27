@@ -4,14 +4,16 @@ extends GutTest
 # Test the idle state for player character
 
 var _idle_state: IdleState = null
-var _mock_player: CharacterBody2D = null
+var _mock_player: Player = null
+var _mock_components: PlayerComponents = null
 var _transitioned_state: int = -1
 
 
 func before_each():
 	_idle_state = IdleState.new()
-	_mock_player = CharacterBody2D.new()
-	_idle_state.character = _mock_player
+	_mock_player = Player.new()
+	_mock_components = PlayerComponents.new(_mock_player)
+	_idle_state.components = _mock_components
 	_idle_state.state_changed.connect(_on_state_changed)
 	add_child_autofree(_idle_state)
 	add_child_autofree(_mock_player)
@@ -21,6 +23,7 @@ func before_each():
 func after_each():
 	_idle_state = null
 	_mock_player = null
+	_mock_components = null
 	_transitioned_state = -1
 
 

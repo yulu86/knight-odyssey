@@ -36,14 +36,15 @@ func test_player_state_base_has_state_machine_property():
 	dummy_machine.queue_free()
 
 
-func test_player_state_base_has_character_property():
-	# Test that PlayerStateBase has character property
+func test_player_state_base_has_components_property():
+	# Test that PlayerStateBase has components property
 	assert_not_null(_test_state, "PlayerStateBase instance should exist")
-	# Property should exist and be assignable to a CharacterBody2D
-	var dummy_character = CharacterBody2D.new()
-	_test_state.character = dummy_character
-	assert_eq(_test_state.character, dummy_character, "PlayerStateBase should have character property")
-	dummy_character.queue_free()
+	# Property should exist and be assignable to a PlayerComponents
+	var dummy_player = Player.new()
+	var dummy_components = PlayerComponents.new(dummy_player)
+	_test_state.components = dummy_components
+	assert_eq(_test_state.components, dummy_components, "PlayerStateBase should have components property")
+	dummy_player.queue_free()
 
 
 func test_player_state_base_has_enter_method():
@@ -74,8 +75,8 @@ func test_player_state_base_state_machine_initially_null():
 	new_state.queue_free()
 
 
-func test_player_state_base_character_initially_null():
-	# Test that character is initially null
+func test_player_state_base_components_initially_null():
+	# Test that components is initially null
 	var new_state = PlayerStateBase.new()
-	assert_null(new_state.character, "character should be null initially")
+	assert_null(new_state.components, "components should be null initially")
 	new_state.queue_free()

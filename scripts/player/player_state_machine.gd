@@ -13,9 +13,9 @@ var current_state: PlayerStateBase = null
 ## 用于创建和管理状态的工厂
 var states_factory: PlayerStateFactory = null
 
-## Reference to the player character this state machine controls
-## 此状态机控制的玩家角色引用
-var character: CharacterBody2D = null
+## Reference to the player components this state machine controls
+## 此状态机控制的玩家组件引用
+var components: PlayerComponents = null
 
 
 func _init() -> void:
@@ -38,7 +38,7 @@ func change_state(state_type: int) -> void:
 	# Set up the new state
 	current_state = new_state
 	current_state.state_machine = self
-	current_state.character = character
+	current_state.components = components
 	current_state.state_changed.connect(change_state)
 	current_state.enter()
 
