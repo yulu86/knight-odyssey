@@ -12,8 +12,15 @@ class_name PlayerStateBase
 signal state_changed(to_state: PlayerState.State)
 
 
-## Reference to the player components this state operates on
-var components: PlayerComponents = null
+var player: Player
+var sprite_2d: Sprite2D
+var animation_player: AnimationPlayer
+
+
+func setup(components: PlayerComponents) -> void:
+	player = components.player
+	sprite_2d = components.sprite_2d
+	animation_player = components.animation_player
 
 
 ## Called when entering this state

@@ -12,8 +12,9 @@ func _init() -> void:
 
 func enter() -> void:
 	# Reset velocity when entering idle state
-	if components != null and components.player != null:
-		components.player.velocity = Vector2.ZERO
+	if player != null:
+		player.velocity = Vector2.ZERO
+		animation_player.play(&"idle")
 
 
 func exit() -> void:
@@ -23,7 +24,7 @@ func exit() -> void:
 
 func process(_delta: float) -> void:
 	# Check for movement input
-	if components != null:
+	if player != null:
 		var direction = Input.get_axis("move_left", "move_right")
 		if not is_zero_approx(direction):
 			transition_state(PlayerState.State.MOVE)
