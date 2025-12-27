@@ -14,7 +14,8 @@ func enter() -> void:
 	# Reset velocity when entering idle state
 	if player != null:
 		player.velocity = Vector2.ZERO
-		animation_player.play(&"idle")
+		if animation_player != null and animation_player.has_animation(&"idle"):
+			animation_player.play(&"idle")
 
 
 func exit() -> void:

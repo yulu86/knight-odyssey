@@ -109,11 +109,11 @@ func test_player_state_machine_has_process_method():
 
 
 func test_player_state_machine_sets_components_on_state():
-	# Test that components is set on state when changing
+	# Test that setup is called on state when changing
 	_test_machine.states_factory.register_state(PlayerState.State.IDLE, _mock_state)
 	_test_machine.components = _mock_components
 	_test_machine.change_state(PlayerState.State.IDLE)
-	assert_eq(_mock_state.components, _mock_components, "components should be set on state")
+	assert_eq(_mock_state.player, _mock_player, "setup should set player reference on state")
 
 
 func test_player_state_machine_handles_null_state_gracefully():

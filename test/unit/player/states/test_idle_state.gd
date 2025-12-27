@@ -12,11 +12,28 @@ var _transitioned_state: int = -1
 func before_each():
 	_idle_state = IdleState.new()
 	_mock_player = Player.new()
+
+	# Add required child nodes BEFORE adding player to scene tree
+	var sprite = Sprite2D.new()
+	sprite.name = "Sprite2D"
+	_mock_player.add_child(sprite)
+
+	var anim_player = AnimationPlayer.new()
+	anim_player.name = "AnimationPlayer"
+	_mock_player.add_child(anim_player)
+
+	var state_machine = PlayerStateMachine.new()
+	state_machine.name = "PlayerStateMachine"
+	_mock_player.add_child(state_machine)
+
+	# Now add to scene tree so @onready variables work
+	add_child_autofree(_mock_player)
+
+	# Create components AFTER player is in scene tree (so @onready vars are set)
 	_mock_components = PlayerComponents.new(_mock_player)
-	_idle_state.components = _mock_components
+	_idle_state.setup(_mock_components)
 	_idle_state.state_changed.connect(_on_state_changed)
 	add_child_autofree(_idle_state)
-	add_child_autofree(_mock_player)
 	_transitioned_state = -1
 
 

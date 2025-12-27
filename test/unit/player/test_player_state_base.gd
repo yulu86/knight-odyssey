@@ -26,14 +26,14 @@ func test_player_state_base_is_node():
 	assert_is(_test_state, Node, "PlayerStateBase should extend Node")
 
 
-func test_player_state_base_has_components_property():
-	# Test that PlayerStateBase has components property
+func test_player_state_base_has_setup_method():
+	# Test that PlayerStateBase has setup method
 	assert_not_null(_test_state, "PlayerStateBase instance should exist")
-	# Property should exist and be assignable to a PlayerComponents
+	# setup should be callable with PlayerComponents parameter
 	var dummy_player = Player.new()
 	var dummy_components = PlayerComponents.new(dummy_player)
-	_test_state.components = dummy_components
-	assert_eq(_test_state.components, dummy_components, "PlayerStateBase should have components property")
+	_test_state.setup(dummy_components)
+	assert_eq(_test_state.player, dummy_player, "setup should set player reference")
 	dummy_player.queue_free()
 
 
@@ -56,10 +56,3 @@ func test_player_state_base_has_process_method():
 	assert_not_null(_test_state, "PlayerStateBase instance should exist")
 	# process should be callable with delta parameter
 	_test_state.process(0.016)
-
-
-func test_player_state_base_components_initially_null():
-	# Test that components is initially null
-	var new_state = PlayerStateBase.new()
-	assert_null(new_state.components, "components should be null initially")
-	new_state.queue_free()
