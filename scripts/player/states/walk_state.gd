@@ -26,9 +26,8 @@ func enter() -> void:
 
 
 func exit() -> void:
-	# Stop movement when exiting walk state
-	if player != null:
-		player.velocity.x = 0
+	# Clean up when exiting walk state
+	pass
 
 
 func process(delta: float) -> void:

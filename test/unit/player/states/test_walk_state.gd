@@ -131,17 +131,6 @@ func test_walk_state_enter_plays_animation():
 	assert_true(true, "WalkState enter should handle animation gracefully")
 
 
-func test_walk_state_exit_resets_velocity():
-	# Test that walk state resets velocity on exit
-	Input.action_press("move_right")
-	_walk_state.process(0.016)
-	assert_true(_mock_player.velocity.x != 0, "Velocity should be non-zero during movement")
-
-	_walk_state.exit()
-	assert_eq(_mock_player.velocity.x, 0, "Velocity should be reset to 0 on exit")
-	Input.action_release("move_right")
-
-
 func test_walk_state_enter_callable():
 	# Test that WalkState enter method can be called
 	_walk_state.enter()

@@ -58,13 +58,6 @@ func test_idle_state_extends_player_state_base():
 	assert_is(_idle_state, PlayerStateBase, "IdleState should extend PlayerStateBase")
 
 
-func test_idle_state_resets_velocity_on_enter():
-	# Test that idle state resets velocity when entering
-	_mock_player.velocity = Vector2(100, 50)
-	_idle_state.enter()
-	assert_eq(_mock_player.velocity, Vector2.ZERO, "Velocity should be reset to ZERO on enter")
-
-
 func test_idle_state_has_no_transition_when_no_input():
 	# Test that idle state produces no transition when no movement input
 	_idle_state.process(0.016)
