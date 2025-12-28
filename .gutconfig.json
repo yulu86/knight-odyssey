@@ -1,5 +1,5 @@
 {
-	"dirs": ["res://test/unit"],
+	"dirs": ["res://test/unit", "res://test/integration"],
 	"should_exit": true,
 	"should_exit_on_success": true,
 	"double_strategy": "SCRIPT_ONLY",

@@ -7,7 +7,7 @@ var _player: Player = null
 var _animation_player: AnimationPlayer = null
 var _state_machine: PlayerStateMachine = null
 var _test_scene: Node2D = null
-var _original_process_mode: Node.ProcessMode = Node.ProcessMode.INHERIT
+var _original_process_mode: int = Node.PROCESS_MODE_INHERIT
 
 
 func before_each():
@@ -22,7 +22,7 @@ func before_each():
 
 	# Disable player's automatic processing during test setup
 	_original_process_mode = _player.process_mode
-	_player.process_mode = Node.ProcessMode.DISABLED
+	_player.process_mode = Node.PROCESS_MODE_DISABLED
 
 	# Add to scene tree AFTER getting references
 	add_child_autofree(_test_scene)
