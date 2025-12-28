@@ -34,7 +34,7 @@ func check_state_transitions(_delta: float) -> void:
 	# Check for landing - transition to idle or move based on input
 	if player.is_on_floor():
 		var direction = get_input_direction()
-		if is_zero_approx(direction):
+		if is_zero_approx(direction) and is_zero_approx(player.velocity.x):
 			transition_state(PlayerState.State.IDLE)
 		else:
 			transition_state(PlayerState.State.MOVE)
