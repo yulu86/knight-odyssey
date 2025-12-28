@@ -3,7 +3,7 @@
 # 跳跃状态：玩家向上跳跃
 
 class_name JumpState
-extends PlayerStateBase
+extends OnAirState
 
 
 const JUMP_ANIMATION_NAME := &"jump"

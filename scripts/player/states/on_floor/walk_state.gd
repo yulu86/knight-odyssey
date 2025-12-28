@@ -3,7 +3,7 @@
 # 移动状态：玩家在地面上左右移动
 
 class_name WalkState
-extends PlayerStateBase
+extends OnFloorState
 
 
 const WALK_ANIMATION_NAME := &"walk"

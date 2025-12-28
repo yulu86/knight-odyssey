@@ -3,7 +3,7 @@
 # 下落状态：玩家向下下落
 
 class_name FallState
-extends PlayerStateBase
+extends OnAirState
 
 
 const FALL_ANIMATION_NAME := &"fall"

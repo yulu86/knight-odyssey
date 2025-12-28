@@ -22,7 +22,8 @@ func _init() -> void:
 ## 通过枚举键获取状态
 ## @param state_type: The enum value for the state type
 ## @return: The state instance, or null if not found
-func get_state(state: PlayerState.State) -> PlayerStateBase:
-	if states.has(state):
-		return states[state].new()
-	return null
+func get_state(state: PlayerState.State):
+	if not states.has(state):
+		return null
+
+	return states[state].new()

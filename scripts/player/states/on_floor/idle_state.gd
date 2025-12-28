@@ -3,7 +3,7 @@
 # 空闲状态：玩家无移动输入时静止
 
 class_name IdleState
-extends PlayerStateBase
+extends OnFloorState
 
 
 const IDLE_ANIMATION_NAME := &"idle"

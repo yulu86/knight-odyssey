@@ -33,21 +33,40 @@ func test_player_state_factory_has_states_dictionary():
 	assert_eq(typeof(_test_factory.states), TYPE_DICTIONARY, "states should be a Dictionary")
 
 
-func test_player_state_factory_has_register_state_method():
-	# Test that PlayerStateFactory has register_state method
-	var test_state = PlayerStateBase.new()
-	_test_factory.register_state(PlayerState.State.IDLE, test_state)
-	assert_true(_test_factory.states.has(PlayerState.State.IDLE), "register_state should add state to dictionary")
-	test_state.queue_free()
+func test_player_state_factory_returns_idle_state():
+	# Test that get_state returns IdleState for IDLE type
+	var state = _test_factory.get_state(PlayerState.State.IDLE)
+	assert_not_null(state, "get_state should return IdleState")
+	assert_is(state, IdleState, "Should return IdleState instance")
+	if state != null:
+		state.queue_free()
 
 
-func test_player_state_factory_can_retrieve_registered_state():
-	# Test that registered state can be retrieved
-	var test_state = PlayerStateBase.new()
-	_test_factory.register_state(PlayerState.State.IDLE, test_state)
-	var retrieved = _test_factory.get_state(PlayerState.State.IDLE)
-	assert_eq(retrieved, test_state, "Should retrieve registered state")
-	test_state.queue_free()
+func test_player_state_factory_returns_move_state():
+	# Test that get_state returns WalkState for MOVE type
+	var state = _test_factory.get_state(PlayerState.State.MOVE)
+	assert_not_null(state, "get_state should return WalkState")
+	assert_is(state, WalkState, "Should return WalkState instance")
+	if state != null:
+		state.queue_free()
+
+
+func test_player_state_factory_returns_jump_state():
+	# Test that get_state returns JumpState for JUMP type
+	var state = _test_factory.get_state(PlayerState.State.JUMP)
+	assert_not_null(state, "get_state should return JumpState")
+	assert_is(state, JumpState, "Should return JumpState instance")
+	if state != null:
+		state.queue_free()
+
+
+func test_player_state_factory_returns_fall_state():
+	# Test that get_state returns FallState for FALL type
+	var state = _test_factory.get_state(PlayerState.State.FALL)
+	assert_not_null(state, "get_state should return FallState")
+	assert_is(state, FallState, "Should return FallState instance")
+	if state != null:
+		state.queue_free()
 
 
 func test_player_state_factory_returns_null_for_unknown_state():
@@ -56,31 +75,14 @@ func test_player_state_factory_returns_null_for_unknown_state():
 	assert_null(result, "get_state should return null for unknown state type")
 
 
-func test_player_state_factory_can_store_multiple_states():
-	# Test that factory can store multiple states
-	var idle_state = PlayerStateBase.new()
-	var move_state = PlayerStateBase.new()
-
-	_test_factory.register_state(PlayerState.State.IDLE, idle_state)
-	_test_factory.register_state(PlayerState.State.MOVE, move_state)
-
-	assert_eq(_test_factory.get_state(PlayerState.State.IDLE), idle_state, "Should retrieve IDLE state")
-	assert_eq(_test_factory.get_state(PlayerState.State.MOVE), move_state, "Should retrieve MOVE state")
-
-	idle_state.queue_free()
-	move_state.queue_free()
-
-
-func test_player_state_factory_overwrites_existing_state():
-	# Test that registering same state type twice overwrites
-	var first_state = PlayerStateBase.new()
-	var second_state = PlayerStateBase.new()
-
-	_test_factory.register_state(PlayerState.State.IDLE, first_state)
-	_test_factory.register_state(PlayerState.State.IDLE, second_state)
-
-	var retrieved = _test_factory.get_state(PlayerState.State.IDLE)
-	assert_eq(retrieved, second_state, "Second registration should overwrite first")
-
-	first_state.queue_free()
-	second_state.queue_free()
+func test_player_state_factory_returns_new_instance_each_call():
+	# Test that get_state creates new instance each time
+	var state1 = _test_factory.get_state(PlayerState.State.IDLE)
+	var state2 = _test_factory.get_state(PlayerState.State.IDLE)
+	assert_not_null(state1, "First call should return state")
+	assert_not_null(state2, "Second call should return state")
+	assert_ne(state1.get_instance_id(), state2.get_instance_id(), "Should return different instances")
+	if state1 != null:
+		state1.queue_free()
+	if state2 != null:
+		state2.queue_free()
