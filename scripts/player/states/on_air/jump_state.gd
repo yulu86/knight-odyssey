@@ -29,18 +29,13 @@ func exit() -> void:
 	pass
 
 
-func process(delta: float) -> void:
+## Transition to fall state when velocity becomes positive (falling)
+## 当垂直速度变为正数时切换到下落状态
+## @param delta: Time since the last frame
+func check_state_transitions(_delta: float) -> void:
 	if player == null:
 		return
-
-	# Apply gravity
-	apply_gravity(delta)
-
-	# Apply air control (horizontal movement while jumping)
-	apply_air_control(delta)
 
 	# Transition to fall state when velocity becomes positive (falling)
 	if player.velocity.y > 0:
 		transition_state(PlayerState.State.FALL)
-
-	player.move_and_slide()

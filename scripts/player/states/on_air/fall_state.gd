@@ -24,15 +24,12 @@ func exit() -> void:
 	pass
 
 
-func process(delta: float) -> void:
+## Check for landing - transition to idle or move based on input
+## 检查是否落地 - 根据输入切换到空闲或移动状态
+## @param delta: Time since the last frame
+func check_state_transitions(_delta: float) -> void:
 	if player == null:
 		return
-
-	# Apply gravity
-	apply_gravity(delta)
-
-	# Apply air control (horizontal movement while falling)
-	apply_air_control(delta)
 
 	# Check for landing - transition to idle or move based on input
 	if player.is_on_floor():
@@ -41,5 +38,3 @@ func process(delta: float) -> void:
 			transition_state(PlayerState.State.IDLE)
 		else:
 			transition_state(PlayerState.State.MOVE)
-
-	player.move_and_slide()
