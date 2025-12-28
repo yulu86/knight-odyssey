@@ -8,16 +8,30 @@ var _mock_player: Player = null
 var _mock_components: PlayerComponents = null
 var _transitioned_state: int = -1
 var _test_scene: Node2D = null
-var _original_process_mode: Node.ProcessMode = Node.ProcessMode.INHERIT
+var _original_process_mode: int = Node.PROCESS_MODE_INHERIT
 
 
 func before_each():
-	# Load the integration test scene which has ground
-	var test_scene_packed = load("res://test/integration/player/test_player.tscn")
-	_test_scene = test_scene_packed.instantiate()
+	# Create a simple test scene with player and ground
+	_test_scene = Node2D.new()
 
-	# Get the player from the test scene
-	_mock_player = _test_scene.get_node("Player")
+	# Create a ground StaticBody2D with proper collision settings
+	var ground = StaticBody2D.new()
+	ground.position = Vector2(0, 100)
+	ground.collision_layer = 1
+	ground.collision_mask = 1
+	var ground_collision = CollisionShape2D.new()
+	var ground_shape = RectangleShape2D.new()
+	ground_shape.size = Vector2(1000, 10)
+	ground_collision.shape = ground_shape
+	ground.add_child(ground_collision)
+	_test_scene.add_child(ground)
+
+	# Load player scene
+	var player_packed = load("res://scenes/player/player.tscn")
+	_mock_player = player_packed.instantiate()
+	_mock_player.position = Vector2(100, 80)
+	_test_scene.add_child(_mock_player)
 
 	# Create components
 	_mock_components = PlayerComponents.new(_mock_player)
@@ -30,20 +44,28 @@ func before_each():
 
 	# Disable player's automatic processing during test setup
 	_original_process_mode = _mock_player.process_mode
-	_mock_player.process_mode = Node.ProcessMode.DISABLED
+	_mock_player.process_mode = Node.PROCESS_MODE_DISABLED
 
-	# Add to scene tree AFTER setting up everything
+	# Add to scene tree
 	add_child_autofree(_test_scene)
-
-	# Reset velocity and call move_and_slide to settle on ground
-	_mock_player.velocity = Vector2.ZERO
-	_mock_player.move_and_slide()
-	_mock_player.move_and_slide()
 
 	# Re-enable player processing
 	_mock_player.process_mode = _original_process_mode
 
-	# Reset to IDLE state after move_and_slide initializes floor state
+	# Wait for physics to be ready
+	await get_tree().physics_frame
+
+	# Let player fall to ground with gravity
+	_mock_player.velocity = Vector2.ZERO
+	for i in range(10):
+		# Apply gravity manually
+		_mock_player.velocity.y += _mock_components.config_manager.get_gravity() * 0.016
+		_mock_player.move_and_slide()
+		if _mock_player.is_on_floor():
+			break
+		await get_tree().physics_frame
+
+	# Reset to IDLE state
 	_mock_player.player_state_machine.change_state(PlayerState.State.IDLE)
 
 	_transitioned_state = -1
