@@ -11,7 +11,7 @@ height = 56.0
 [node name="TestPlayer" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource("1_j5ay0")]
-position = Vector2(34, 128)
+position = Vector2(19, 130)
 
 [node name="Floor1" type="StaticBody2D" parent="."]
 position = Vector2(65, 131)

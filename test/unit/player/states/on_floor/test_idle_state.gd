@@ -7,33 +7,45 @@ var _idle_state: IdleState = null
 var _mock_player: Player = null
 var _mock_components: PlayerComponents = null
 var _transitioned_state: int = -1
+var _test_scene: Node2D = null
+var _original_process_mode: Node.ProcessMode = Node.ProcessMode.INHERIT
 
 
 func before_each():
-	_idle_state = IdleState.new()
-	_mock_player = Player.new()
+	# Load the integration test scene which has ground
+	var test_scene_packed = load("res://test/integration/player/test_player.tscn")
+	_test_scene = test_scene_packed.instantiate()
 
-	# Add required child nodes BEFORE adding player to scene tree
-	var sprite = Sprite2D.new()
-	sprite.name = "Sprite2D"
-	_mock_player.add_child(sprite)
+	# Get the player from the test scene
+	_mock_player = _test_scene.get_node("Player")
 
-	var anim_player = AnimationPlayer.new()
-	anim_player.name = "AnimationPlayer"
-	_mock_player.add_child(anim_player)
-
-	var state_machine = PlayerStateMachine.new()
-	state_machine.name = "PlayerStateMachine"
-	_mock_player.add_child(state_machine)
-
-	# Now add to scene tree so @onready variables work
-	add_child_autofree(_mock_player)
-
-	# Create components AFTER player is in scene tree (so @onready vars are set)
+	# Create components
 	_mock_components = PlayerComponents.new(_mock_player)
+
+	# Create idle state
+	_idle_state = IdleState.new()
 	_idle_state.setup(_mock_components)
 	_idle_state.state_changed.connect(_on_state_changed)
 	add_child_autofree(_idle_state)
+
+	# Disable player's automatic processing during test setup
+	_original_process_mode = _mock_player.process_mode
+	_mock_player.process_mode = Node.ProcessMode.DISABLED
+
+	# Add to scene tree AFTER setting up everything
+	add_child_autofree(_test_scene)
+
+	# Reset velocity and call move_and_slide to settle on ground
+	_mock_player.velocity = Vector2.ZERO
+	_mock_player.move_and_slide()
+	_mock_player.move_and_slide()
+
+	# Re-enable player processing
+	_mock_player.process_mode = _original_process_mode
+
+	# Reset to IDLE state after move_and_slide initializes floor state
+	_mock_player.player_state_machine.change_state(PlayerState.State.IDLE)
+
 	_transitioned_state = -1
 
 
@@ -41,6 +53,7 @@ func after_each():
 	_idle_state = null
 	_mock_player = null
 	_mock_components = null
+	_test_scene = null
 	_transitioned_state = -1
 
 

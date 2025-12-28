@@ -25,6 +25,8 @@ func exit() -> void:
 
 
 func process(delta: float) -> void:
+	super.process(delta)
+
 	if player == null:
 		return
 

@@ -6,25 +6,44 @@ extends GutTest
 var _player: Player = null
 var _animation_player: AnimationPlayer = null
 var _state_machine: PlayerStateMachine = null
+var _test_scene: Node2D = null
+var _original_process_mode: Node.ProcessMode = Node.ProcessMode.INHERIT
 
 
 func before_each():
-	# Create player scene
-	var player_scene = load("res://scenes/player/player.tscn")
-	_player = player_scene.instantiate()
+	# Load the integration test scene which has ground
+	var test_scene_packed = load("res://test/integration/player/test_player.tscn")
+	_test_scene = test_scene_packed.instantiate()
 
-	# Get references to nodes
+	# Get the player and its nodes from the test scene
+	_player = _test_scene.get_node("Player")
 	_animation_player = _player.get_node("AnimationPlayer")
 	_state_machine = _player.get_node("PlayerStateMachine")
 
-	# Add to scene tree so @onready variables work
-	add_child_autofree(_player)
+	# Disable player's automatic processing during test setup
+	_original_process_mode = _player.process_mode
+	_player.process_mode = Node.ProcessMode.DISABLED
+
+	# Add to scene tree AFTER getting references
+	add_child_autofree(_test_scene)
+
+	# Reset velocity and call move_and_slide to settle on ground
+	_player.velocity = Vector2.ZERO
+	_player.move_and_slide()
+	_player.move_and_slide()
+
+	# Re-enable player processing
+	_player.process_mode = _original_process_mode
+
+	# Reset to IDLE state after move_and_slide initializes floor state
+	_state_machine.change_state(PlayerState.State.IDLE)
 
 
 func after_each():
 	_player = null
 	_animation_player = null
 	_state_machine = null
+	_test_scene = null
 
 
 func test_idle_state_plays_idle_animation():
