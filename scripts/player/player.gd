@@ -13,6 +13,12 @@ func _ready() -> void:
 	if player_state_machine != null:
 		var components = PlayerComponents.new(self)
 		player_state_machine.components = components
+
+		# Register all player states
+		player_state_machine.states_factory.register_state(PlayerState.State.IDLE, IdleState.new())
+		player_state_machine.states_factory.register_state(PlayerState.State.MOVE, WalkState.new())
+
+		# Start with idle state
 		player_state_machine.change_state(PlayerState.State.IDLE)
 
 
