@@ -6,15 +6,24 @@ extends RefCounted
 # 默认配置值
 const DEFAULT_PLAYER_SPEED: float = 200.0
 const DEFAULT_PLAYER_JUMP_VELOCITY: float = -400.0
+const DEFAULT_WALK_SPEED: float = 200.0
+const DEFAULT_ACCELERATION: float = 800.0
+const DEFAULT_FRICTION: float = 800.0
 
 # 当前配置值
 var player_speed: float
 var player_jump_velocity: float
+var walk_speed: float
+var acceleration: float
+var friction: float
 
 func _init():
 	# 初始化默认值
 	player_speed = DEFAULT_PLAYER_SPEED
 	player_jump_velocity = DEFAULT_PLAYER_JUMP_VELOCITY
+	walk_speed = DEFAULT_WALK_SPEED
+	acceleration = DEFAULT_ACCELERATION
+	friction = DEFAULT_FRICTION
 
 # 加载玩家配置
 # @param config_path: 配置文件路径
@@ -41,6 +50,9 @@ func load_player_config(config_path: String) -> bool:
 	# 读取配置值
 	player_speed = config.get_value("player", "speed", DEFAULT_PLAYER_SPEED)
 	player_jump_velocity = config.get_value("player", "jump_velocity", DEFAULT_PLAYER_JUMP_VELOCITY)
+	walk_speed = config.get_value("player", "walk_speed", DEFAULT_WALK_SPEED)
+	acceleration = config.get_value("player", "acceleration", DEFAULT_ACCELERATION)
+	friction = config.get_value("player", "friction", DEFAULT_FRICTION)
 
 	print("Config loaded successfully from: ", config_path)
 	print("Player speed: ", player_speed)
@@ -91,4 +103,38 @@ func save_player_config(config_path: String) -> bool:
 func reset_to_defaults():
 	player_speed = DEFAULT_PLAYER_SPEED
 	player_jump_velocity = DEFAULT_PLAYER_JUMP_VELOCITY
+	walk_speed = DEFAULT_WALK_SPEED
+	acceleration = DEFAULT_ACCELERATION
+	friction = DEFAULT_FRICTION
 	print("Config reset to default values")
+
+
+# 获取行走速度
+# @return: 行走速度值
+func get_walk_speed() -> float:
+	return walk_speed
+
+# 获取加速度
+# @return: 加速度值
+func get_acceleration() -> float:
+	return acceleration
+
+# 获取摩擦力
+# @return: 摩擦力值
+func get_friction() -> float:
+	return friction
+
+# 设置行走速度
+# @param speed: 新的行走速度值
+func set_walk_speed(speed: float):
+	walk_speed = speed
+
+# 设置加速度
+# @param accel: 新的加速度值
+func set_acceleration(accel: float):
+	acceleration = accel
+
+# 设置摩擦力
+# @param fric: 新的摩擦力值
+func set_friction(fric: float):
+	friction = fric

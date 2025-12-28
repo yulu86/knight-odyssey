@@ -5,6 +5,7 @@ extends RefCounted
 var player: Player
 var sprite_2d: Sprite2D
 var animation_player: AnimationPlayer
+var config_manager: ConfigManager
 
 
 func _init(context_player: Player):

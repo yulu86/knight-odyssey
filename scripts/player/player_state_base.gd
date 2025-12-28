@@ -15,6 +15,7 @@ signal state_changed(to_state: PlayerState.State)
 var player: Player
 var sprite_2d: Sprite2D
 var animation_player: AnimationPlayer
+var config_manager: ConfigManager
 
 ## The state type enum value for this state
 ## 此状态的类型枚举值
@@ -25,6 +26,7 @@ func setup(components: PlayerComponents) -> void:
 	player = components.player
 	sprite_2d = components.sprite_2d
 	animation_player = components.animation_player
+	config_manager = components.config_manager
 
 
 ## Called when entering this state

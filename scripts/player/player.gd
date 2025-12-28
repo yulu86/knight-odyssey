@@ -8,10 +8,13 @@ class_name Player
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var player_state_machine: PlayerStateMachine = $PlayerStateMachine
 
+var config_manager: ConfigManager = ConfigManager.new()
+
 
 func _ready() -> void:
 	if player_state_machine != null:
 		var components = PlayerComponents.new(self)
+		components.config_manager = config_manager
 		player_state_machine.components = components
 
 		# Start with idle state

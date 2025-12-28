@@ -5,15 +5,6 @@
 class_name WalkState
 extends PlayerStateBase
 
-## Movement speed for walk state
-const WALK_SPEED: float = 200.0
-
-## Acceleration when starting to move
-const ACCELERATION: float = 800.0
-
-## Friction when stopping movement
-const FRICTION: float = 800.0
-
 
 func _init() -> void:
 	state_type = PlayerState.State.MOVE
@@ -42,13 +33,18 @@ func process(delta: float) -> void:
 	# Get movement input direction
 	var direction = get_input_direction()
 
+	# Get movement configuration from ConfigManager
+	var walk_speed = config_manager.get_walk_speed() if config_manager != null else 200.0
+	var acceleration = config_manager.get_acceleration() if config_manager != null else 800.0
+	var friction = config_manager.get_friction() if config_manager != null else 800.0
+
 	# Handle movement with acceleration and friction
 	if is_zero_approx(direction):
 		# Apply friction when no input
 		player.velocity.x = move_toward(
 			player.velocity.x,
 			0.0,
-			FRICTION * delta
+			friction * delta
 		)
 
 		# Transition to idle when stopped
@@ -58,11 +54,11 @@ func process(delta: float) -> void:
 		# Apply acceleration in the input direction
 		player.velocity.x = move_toward(
 			player.velocity.x,
-			direction * WALK_SPEED,
-			ACCELERATION * delta
+			direction * walk_speed,
+			acceleration * delta
 		)
 
 		# Update sprite facing direction
 		update_sprite_facing(direction)
-	
+
 	player.move_and_slide()
