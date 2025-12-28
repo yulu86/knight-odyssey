@@ -16,7 +16,7 @@ const FRICTION: float = 800.0
 
 
 func _init() -> void:
-	pass
+	state_type = PlayerState.State.MOVE
 
 
 func enter() -> void:

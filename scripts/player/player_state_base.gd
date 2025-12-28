@@ -16,6 +16,10 @@ var player: Player
 var sprite_2d: Sprite2D
 var animation_player: AnimationPlayer
 
+## The state type enum value for this state
+## 此状态的类型枚举值
+var state_type: PlayerState.State = PlayerState.State.IDLE
+
 
 func setup(components: PlayerComponents) -> void:
 	player = components.player

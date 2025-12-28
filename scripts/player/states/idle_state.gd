@@ -7,7 +7,7 @@ extends PlayerStateBase
 
 
 func _init() -> void:
-	pass
+	state_type = PlayerState.State.IDLE
 
 
 func enter() -> void:
