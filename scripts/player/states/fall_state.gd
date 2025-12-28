@@ -1,0 +1,41 @@
+# Fall State
+# Player falls downward
+# 下落状态：玩家向下下落
+
+class_name FallState
+extends PlayerStateBase
+
+
+func _init() -> void:
+	state_type = PlayerState.State.FALL
+
+
+func enter() -> void:
+	# No special setup when entering fall state
+	pass
+
+
+func exit() -> void:
+	# Clean up when exiting fall state
+	pass
+
+
+func process(delta: float) -> void:
+	if player == null:
+		return
+
+	# Apply gravity
+	apply_gravity(delta)
+
+	# Apply air control (horizontal movement while falling)
+	apply_air_control(delta)
+
+	# Check for landing - transition to idle or move based on input
+	if player.is_on_floor():
+		var direction = get_input_direction()
+		if is_zero_approx(direction):
+			transition_state(PlayerState.State.IDLE)
+		else:
+			transition_state(PlayerState.State.MOVE)
+
+	player.move_and_slide()

@@ -96,3 +96,21 @@ func test_idle_state_process_method_callable():
 	# Test that IdleState process method can be called
 	_idle_state.process(0.016)
 	assert_true(true, "IdleState process should be callable")
+
+
+func test_idle_state_transitions_to_jump_on_jump_input():
+	# Test that idle state transitions to JUMP when jump input is received
+	Input.action_press("jump")
+	_idle_state.process(0.016)
+	assert_eq(_transitioned_state, PlayerState.State.JUMP, "Should transition to JUMP on jump input")
+	Input.action_release("jump")
+
+
+func test_idle_state_jump_has_priority_over_movement():
+	# Test that jump input has priority over movement input
+	Input.action_press("move_right")
+	Input.action_press("jump")
+	_idle_state.process(0.016)
+	assert_eq(_transitioned_state, PlayerState.State.JUMP, "Jump should have priority over movement")
+	Input.action_release("move_right")
+	Input.action_release("jump")

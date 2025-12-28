@@ -66,3 +66,28 @@ func update_sprite_facing(direction: float) -> void:
 			sprite_2d.flip_h = false
 		else:
 			sprite_2d.flip_h = true
+
+
+## Apply gravity to player vertical velocity
+## @param delta: Time since the last frame
+func apply_gravity(delta: float) -> void:
+	if player != null and config_manager != null:
+		var gravity = config_manager.get_gravity()
+		player.velocity.y += gravity * delta
+
+
+## Apply air control (horizontal movement while in air)
+## @param delta: Time since the last frame
+func apply_air_control(delta: float) -> void:
+	if player == null or config_manager == null:
+		return
+
+	var direction = get_input_direction()
+	var air_acceleration = config_manager.get_air_acceleration()
+	var air_friction = config_manager.get_air_friction()
+
+	if is_zero_approx(direction):
+		player.velocity.x = move_toward(player.velocity.x, 0.0, air_friction * delta)
+	else:
+		player.velocity.x = move_toward(player.velocity.x, direction * config_manager.get_walk_speed(), air_acceleration * delta)
+		update_sprite_facing(direction)

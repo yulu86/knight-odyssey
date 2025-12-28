@@ -37,7 +37,11 @@ func change_state(to_state: PlayerState.State) -> void:
 
 	# Exit the current state if exists
 	if current_state != null:
+		# Disconnect the signal to prevent duplicate connections
+		if current_state.state_changed.is_connected(change_state):
+			current_state.state_changed.disconnect(change_state)
 		current_state.exit()
+		# Don't free the state - it's managed by the factory
 
 	# Set up the new state
 	current_state = new_state

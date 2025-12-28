@@ -27,7 +27,12 @@ func exit() -> void:
 func process(_delta: float) -> void:
 	if player == null:
 		return
-	
+
+	# Check for jump input first (higher priority than movement)
+	if Input.is_action_pressed("jump"):
+		transition_state(PlayerState.State.JUMP)
+		return
+
 	# Check for movement input
 	var direction = get_input_direction()
 	if not is_zero_approx(direction):

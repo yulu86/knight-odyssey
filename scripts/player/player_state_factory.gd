@@ -14,6 +14,8 @@ func _init() -> void:
 	# Register all available states
 	register_state(PlayerState.State.IDLE, IdleState.new())
 	register_state(PlayerState.State.MOVE, WalkState.new())
+	register_state(PlayerState.State.JUMP, JumpState.new())
+	register_state(PlayerState.State.FALL, FallState.new())
 
 
 ## Register a state with an enum key
