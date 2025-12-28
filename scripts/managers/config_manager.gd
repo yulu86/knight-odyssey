@@ -11,7 +11,7 @@ const DEFAULT_ACCELERATION: float = 800.0
 const DEFAULT_FRICTION: float = 800.0
 const DEFAULT_GRAVITY: float = 1200.0
 const DEFAULT_AIR_ACCELERATION: float = 600.0
-const DEFAULT_AIR_FRICTION: float = 200.0
+const DEFAULT_AIR_FRICTION: float = 1000.0
 
 # 当前配置值
 var player_speed: float
