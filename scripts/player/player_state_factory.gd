@@ -11,19 +11,11 @@ var states: Dictionary = {}
 
 
 func _init() -> void:
-	# Register all available states
-	register_state(PlayerState.State.IDLE, IdleState.new())
-	register_state(PlayerState.State.MOVE, WalkState.new())
-	register_state(PlayerState.State.JUMP, JumpState.new())
-	register_state(PlayerState.State.FALL, FallState.new())
-
-
-## Register a state with an enum key
-## 使用枚举键注册状态
-## @param state_type: The enum value for the state type
-## @param state: The state instance to register
-func register_state(state_type: PlayerState.State, state: PlayerStateBase) -> void:
-	states[state_type] = state
+	# Register all available states	
+	states[PlayerState.State.IDLE] = IdleState
+	states[PlayerState.State.MOVE] = WalkState
+	states[PlayerState.State.JUMP] = JumpState
+	states[PlayerState.State.FALL] = FallState
 
 
 ## Get a state by enum key
@@ -32,5 +24,5 @@ func register_state(state_type: PlayerState.State, state: PlayerStateBase) -> vo
 ## @return: The state instance, or null if not found
 func get_state(state: PlayerState.State) -> PlayerStateBase:
 	if states.has(state):
-		return states[state]
+		return states[state].new()
 	return null

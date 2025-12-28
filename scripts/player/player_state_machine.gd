@@ -41,7 +41,8 @@ func change_state(to_state: PlayerState.State) -> void:
 		if current_state.state_changed.is_connected(change_state):
 			current_state.state_changed.disconnect(change_state)
 		current_state.exit()
-		# Don't free the state - it's managed by the factory
+		var last_state := current_state
+		last_state.call_deferred("free")
 
 	# Set up the new state
 	current_state = new_state
