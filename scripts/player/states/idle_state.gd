@@ -6,7 +6,7 @@ class_name IdleState
 extends PlayerStateBase
 
 
-const IDLE_ANIMATION_NAME := "idle"
+const IDLE_ANIMATION_NAME := &"idle"
 
 
 func _init() -> void:

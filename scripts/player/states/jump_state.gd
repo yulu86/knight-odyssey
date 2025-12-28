@@ -6,11 +6,18 @@ class_name JumpState
 extends PlayerStateBase
 
 
+const JUMP_ANIMATION_NAME := &"jump"
+
+
 func _init() -> void:
 	state_type = PlayerState.State.JUMP
 
 
 func enter() -> void:
+	# Play jump animation when entering jump state
+	if animation_player != null and animation_player.has_animation(JUMP_ANIMATION_NAME):
+		animation_player.play(JUMP_ANIMATION_NAME)
+
 	# Set jump velocity when entering jump state
 	if player != null and config_manager != null:
 		var jump_velocity = config_manager.get_player_jump_velocity()

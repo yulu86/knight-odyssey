@@ -6,14 +6,17 @@ class_name WalkState
 extends PlayerStateBase
 
 
+const WALK_ANIMATION_NAME := &"walk"
+
+
 func _init() -> void:
 	state_type = PlayerState.State.MOVE
 
 
 func enter() -> void:
 	# Play walk animation when entering walk state
-	if animation_player != null and animation_player.has_animation(&"walk"):
-		animation_player.play(&"walk")
+	if animation_player != null and animation_player.has_animation(WALK_ANIMATION_NAME):
+		animation_player.play(WALK_ANIMATION_NAME)
 
 
 func exit() -> void:

@@ -6,13 +6,17 @@ class_name FallState
 extends PlayerStateBase
 
 
+const FALL_ANIMATION_NAME := &"fall"
+
+
 func _init() -> void:
 	state_type = PlayerState.State.FALL
 
 
 func enter() -> void:
-	# No special setup when entering fall state
-	pass
+	# Play fall animation when entering fall state
+	if animation_player != null and animation_player.has_animation(FALL_ANIMATION_NAME):
+		animation_player.play(FALL_ANIMATION_NAME)
 
 
 func exit() -> void:
