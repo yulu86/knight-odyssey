@@ -6,14 +6,17 @@ class_name IdleState
 extends PlayerStateBase
 
 
+const IDLE_ANIMATION_NAME := "idle"
+
+
 func _init() -> void:
 	state_type = PlayerState.State.IDLE
 
 
 func enter() -> void:
 	# Play idle animation when entering idle state
-	if player != null and animation_player != null and animation_player.has_animation(&"idle"):
-		animation_player.play(&"idle")
+	if player != null and animation_player != null and animation_player.has_animation(IDLE_ANIMATION_NAME):
+		animation_player.play(IDLE_ANIMATION_NAME)
 
 
 func exit() -> void:
@@ -22,8 +25,12 @@ func exit() -> void:
 
 
 func process(_delta: float) -> void:
+	if player == null:
+		return
+	
 	# Check for movement input
-	if player != null:
-		var direction = Input.get_axis("move_left", "move_right")
-		if not is_zero_approx(direction):
-			transition_state(PlayerState.State.MOVE)
+	var direction = get_input_direction()
+	if not is_zero_approx(direction):
+		transition_state(PlayerState.State.MOVE)
+
+	player.move_and_slide()

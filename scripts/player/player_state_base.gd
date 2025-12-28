@@ -51,3 +51,16 @@ func process(_delta: float) -> void:
 ## @param to_state: The target state to transition to
 func transition_state(to_state: PlayerState.State) -> void:
 	state_changed.emit(to_state)
+
+
+func get_input_direction() -> float:
+	return Input.get_axis("move_left", "move_right")
+
+
+## Update sprite facing direction based on movement direction
+func update_sprite_facing(direction: float) -> void:
+	if sprite_2d != null:
+		if direction > 0:
+			sprite_2d.flip_h = false
+		else:
+			sprite_2d.flip_h = true

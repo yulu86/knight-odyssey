@@ -14,14 +14,10 @@ func _ready() -> void:
 		var components = PlayerComponents.new(self)
 		player_state_machine.components = components
 
-		# Register all player states
-		player_state_machine.states_factory.register_state(PlayerState.State.IDLE, IdleState.new())
-		player_state_machine.states_factory.register_state(PlayerState.State.MOVE, WalkState.new())
-
 		# Start with idle state
 		player_state_machine.change_state(PlayerState.State.IDLE)
 
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	# Called every frame
-	pass
+	player_state_machine.process(delta)

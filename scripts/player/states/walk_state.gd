@@ -40,24 +40,10 @@ func process(delta: float) -> void:
 		return
 
 	# Get movement input direction
-	var direction = Input.get_axis("move_left", "move_right")
+	var direction = get_input_direction()
 
 	# Handle movement with acceleration and friction
-	if not is_zero_approx(direction):
-		# Apply acceleration in the input direction
-		player.velocity.x = move_toward(
-			player.velocity.x,
-			direction * WALK_SPEED,
-			ACCELERATION * delta
-		)
-
-		# Update sprite facing direction
-		if sprite_2d != null:
-			if direction > 0:
-				sprite_2d.flip_h = false
-			else:
-				sprite_2d.flip_h = true
-	else:
+	if is_zero_approx(direction):
 		# Apply friction when no input
 		player.velocity.x = move_toward(
 			player.velocity.x,
@@ -68,3 +54,15 @@ func process(delta: float) -> void:
 		# Transition to idle when stopped
 		if is_zero_approx(player.velocity.x):
 			transition_state(PlayerState.State.IDLE)
+	else:
+		# Apply acceleration in the input direction
+		player.velocity.x = move_toward(
+			player.velocity.x,
+			direction * WALK_SPEED,
+			ACCELERATION * delta
+		)
+
+		# Update sprite facing direction
+		update_sprite_facing(direction)
+	
+	player.move_and_slide()

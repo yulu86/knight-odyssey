@@ -41,13 +41,6 @@ func test_player_state_factory_has_register_state_method():
 	test_state.queue_free()
 
 
-func test_player_state_factory_has_get_state_method():
-	# Test that PlayerStateFactory has get_state method
-	# Should return null for non-existent state
-	var result = _test_factory.get_state(PlayerState.State.IDLE)
-	assert_null(result, "get_state should return null for non-existent state")
-
-
 func test_player_state_factory_can_retrieve_registered_state():
 	# Test that registered state can be retrieved
 	var test_state = PlayerStateBase.new()

@@ -22,42 +22,18 @@ func _init() -> void:
 	states_factory = PlayerStateFactory.new()
 
 
-## Get the string name of a state enum value
-## 获取状态枚举值的字符串名称
-## @param state_type: The state enum value
-## @return: String representation of the state
-func _get_state_name(state_type: int) -> String:
-	match state_type:
-		PlayerState.State.IDLE:
-			return "IDLE"
-		PlayerState.State.MOVE:
-			return "MOVE"
-		PlayerState.State.JUMP:
-			return "JUMP"
-		PlayerState.State.FALL:
-			return "FALL"
-		PlayerState.State.ATTACK:
-			return "ATTACK"
-		_:
-			return "UNKNOWN(%d)" % state_type
-
-
 ## Change to a new state by enum type
 ## 通过枚举类型切换到新状态
 ## @param state_type: The enum value for the state to change to
-func change_state(state_type: int) -> void:
-	var new_state: PlayerStateBase = states_factory.get_state(state_type)
+func change_state(to_state: PlayerState.State) -> void:
+	var new_state: PlayerStateBase = states_factory.get_state(to_state)
 
 	if new_state == null:
-		print("WARNING: State not found: %s" % _get_state_name(state_type))
+		print("WARNING: State not found: %s" % _get_state_name(to_state))
 		return
 
 	# Log state transition
-	var from_state = "NONE"
-	if current_state != null:
-		from_state = _get_state_name(current_state.state_type)
-	var to_state = _get_state_name(state_type)
-	print("State transition: %s -> %s" % [from_state, to_state])
+	_log_state_transition(to_state)
 
 	# Exit the current state if exists
 	if current_state != null:
@@ -76,3 +52,34 @@ func change_state(state_type: int) -> void:
 func process(delta: float) -> void:
 	if current_state != null:
 		current_state.process(delta)
+
+
+## Get the string name of a state enum value
+## 获取状态枚举值的字符串名称
+## @param state: The state enum value
+## @return: String representation of the state
+func _get_state_name(state: PlayerState.State) -> String:
+	match state:
+		PlayerState.State.IDLE:
+			return "IDLE"
+		PlayerState.State.MOVE:
+			return "MOVE"
+		PlayerState.State.JUMP:
+			return "JUMP"
+		PlayerState.State.FALL:
+			return "FALL"
+		PlayerState.State.ATTACK:
+			return "ATTACK"
+		_:
+			return "UNKNOWN(%d)" % state
+
+
+## Log state transition for debugging
+## 记录状态转换用于调试
+## @param state_type: The target state enum value
+func _log_state_transition(state: PlayerState.State) -> void:
+	var from_state = "NONE"
+	if current_state != null:
+		from_state = _get_state_name(current_state.state_type)
+	var to_state := _get_state_name(state)
+	print("State transition: %s -> %s" % [from_state, to_state])
