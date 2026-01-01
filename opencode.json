@@ -12,7 +12,7 @@
                 "GODOT_PATH": "${GODOT_HOME}"
             }
         },
-        "godot-lsp": {
+        "minimal-godot": {
             "type": "local",
             "command": [
                 "node",
