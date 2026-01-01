@@ -53,4 +53,18 @@ func test_scene_loading_progress() -> void:
 		"GameManager should emit scene_loading_started signal"
 	)
 
+	await wait_for_signal(EventBus.scene_loading_finished, 2.0)
+
+	assert_signal_emitted(
+		EventBus,
+		"scene_loading_finished",
+		"GameManager should emit scene_loading_finished signal"
+	)
+
+	assert_eq(
+		game_manager.get_current_scene(),
+		TEST_SCENE_PATH,
+		"Current scene path should match loaded scene"
+	)
+
 	game_manager.set_scene_switching_enabled(true)
