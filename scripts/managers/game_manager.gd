@@ -17,6 +17,9 @@ var _enable_scene_switching: bool = true
 var _loading_scene_path: String = ""
 var _is_loading: bool = false
 
+var config_manager: ConfigManager
+var save_manager: SaveManager
+
 
 func _ready() -> void:
 	_initialize()
@@ -29,9 +32,49 @@ func is_game_manager_initialized() -> bool:
 func _initialize() -> void:
 	if is_initialized:
 		return
-
+	
+	config_manager = ConfigManager
+	save_manager = SaveManager.new()
+	
+	load_game_config()
+	
+	EventBus.game_manager_initialized.emit()
+	
 	is_initialized = true
 	current_state = GameState.MENU
+
+
+func load_game_config() -> void:
+	var config_path = "res://configs/player.cfg"
+	var success = config_manager.load_player_config(config_path)
+	EventBus.config_loaded.emit(success)
+
+
+func save_game_progress(slot_id: int) -> bool:
+	var data = {
+		"score": 0,
+		"lives": 3,
+		"current_scene": current_scene_path,
+		"game_state": current_state
+	}
+	var success = save_manager.save_game(slot_id, data)
+	EventBus.game_saved.emit(slot_id, success)
+	return success
+
+
+func load_game_progress(slot_id: int) -> bool:
+	var data = save_manager.load_game(slot_id)
+	if data.is_empty():
+		EventBus.game_loaded.emit(slot_id, false)
+		return false
+	
+	if data.has("score"):
+		EventBus.score_updated.emit(data["score"])
+	if data.has("lives"):
+		EventBus.lives_updated.emit(data["lives"])
+	
+	EventBus.game_loaded.emit(slot_id, true)
+	return true
 
 
 func load_scene(scene_path: String, show_progress: bool = false) -> void:
