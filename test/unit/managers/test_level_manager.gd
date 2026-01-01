@@ -238,3 +238,107 @@ func test_complete_level_sends_event():
     var signal_args = get_signal_parameters(EventBus, "level_completed")
     assert_eq(signal_args[0], "1-1", "level_completed signal should contain correct level_id")
     assert_eq(signal_args[1], 1000, "level_completed signal should contain correct score")
+
+
+# Task 4: 关卡进度保存和加载
+
+
+func test_save_level_progress():
+    # 测试保存关卡进度
+    # - 完成几个关卡
+    # - 调用save_level_progress()
+    # - 验证SaveManager被调用
+    # - 验证发送level_progress_saved事件
+    watch_signals(EventBus)
+
+    LevelManager.complete_level("1-1", 1000)
+    LevelManager.complete_level("1-2", 1500)
+
+    var save_result: bool = LevelManager.save_level_progress()
+
+    assert_true(save_result, "save_level_progress should return true")
+    assert_signal_emitted(EventBus, "level_progress_saved", "level_progress_saved signal should be emitted")
+
+
+func test_load_level_progress():
+    # 测试加载关卡进度
+    # - 保存进度后
+    # - 清空关卡状态
+    # - 调用load_level_progress()
+    # - 验证关卡状态恢复
+    watch_signals(EventBus)
+
+    # 保存进度
+    LevelManager.complete_level("1-1", 1000)
+    LevelManager.complete_level("1-2", 1500)
+    LevelManager.save_level_progress()
+
+    # 清空关卡状态并重新加载
+    LevelManager._levels = []
+    LevelManager.current_level = null
+    LevelManager._initialize_default_levels()
+
+    LevelManager.load_level_progress()
+
+    assert_true(LevelManager.is_level_completed("1-1"), "Level 1-1 should be completed after loading")
+    assert_true(LevelManager.is_level_completed("1-2"), "Level 1-2 should be completed after loading")
+    assert_true(LevelManager.is_level_unlocked("1-3"), "Level 1-3 should be unlocked after loading")
+
+
+func test_save_and_load_persist_data():
+    # 测试保存和加载数据一致性
+    # - 完成关卡并设置分数
+    # - 保存进度
+    # - 清空状态
+    # - 加载进度
+    # - 验证解锁状态、完成状态、分数都正确
+    watch_signals(EventBus)
+
+    # 完成关卡并设置分数
+    LevelManager.complete_level("1-1", 1000)
+    LevelManager.complete_level("1-2", 2000)
+
+    var original_score_1_1 = LevelManager.get_level_high_score("1-1")
+    var original_score_1_2 = LevelManager.get_level_high_score("1-2")
+
+    # 保存进度
+    LevelManager.save_level_progress()
+
+    # 清空状态并重新加载
+    LevelManager._levels = []
+    LevelManager.current_level = null
+    LevelManager._initialize_default_levels()
+
+    LevelManager.load_level_progress()
+
+    # 验证数据一致性
+    assert_eq(LevelManager.get_level_high_score("1-1"), original_score_1_1, "High score should be persisted")
+    assert_eq(LevelManager.get_level_high_score("1-2"), original_score_1_2, "High score should be persisted")
+    assert_true(LevelManager.is_level_completed("1-1"), "Completed status should be persisted")
+    assert_true(LevelManager.is_level_completed("1-2"), "Completed status should be persisted")
+    assert_true(LevelManager.is_level_unlocked("1-2"), "Unlocked status should be persisted")
+    assert_true(LevelManager.is_level_unlocked("1-3"), "Unlocked status should be persisted")
+
+ 
+func test_load_on_no_save_file():
+    # 测试没有存档文件时的加载
+    # - 删除存档文件
+    # - 调用load_level_progress()
+    # - 验证使用默认状态（只有1-1解锁）
+    # 注意：在单元测试中模拟无存档文件的情况
+
+    # 删除存档文件
+    var save_manager := SaveManager.new()
+    save_manager.delete_save(LevelManager.SAVE_SLOT)
+
+    # 重新初始化LevelManager
+    LevelManager._levels = []
+    LevelManager.current_level = null
+    LevelManager._initialize_default_levels()
+
+    LevelManager.load_level_progress()
+
+    # 验证默认状态
+    assert_true(LevelManager.is_level_unlocked("1-1"), "Level 1-1 should be unlocked by default")
+    assert_false(LevelManager.is_level_unlocked("1-2"), "Level 1-2 should be locked by default")
+    assert_false(LevelManager.is_level_completed("1-1"), "Level 1-1 should not be completed by default")

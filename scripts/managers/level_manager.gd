@@ -44,6 +44,7 @@ func _ready() -> void:
     # - 加载已保存的进度
     _initialize_default_levels()
     _unlock_first_level()
+    load_level_progress()
 
 
 # 获取关卡信息
@@ -235,3 +236,101 @@ func _initialize_default_levels() -> void:
 func _unlock_first_level() -> void:
     if _levels.size() > 0:
         _levels[0].is_unlocked = true
+
+
+# 关卡进度保存和加载
+const SAVE_SLOT = 0
+const SAVE_SECTION = "level_progress"
+
+
+# 保存关卡进度
+# @return: 是否成功保存
+func save_level_progress() -> bool:
+    # 构建保存数据结构
+    var unlocked_levels: Array[String] = []
+    var completed_levels: Array[String] = []
+    var high_scores: Dictionary = {}
+    var coins: Dictionary = {}
+
+    for level in _levels:
+        if level.is_unlocked:
+            unlocked_levels.append(level.level_id)
+        if level.is_completed:
+            completed_levels.append(level.level_id)
+        if level.high_score > 0:
+            high_scores[level.level_id] = level.high_score
+        coins[level.level_id] = {
+            "collected": level.coins_collected,
+            "total": level.total_coins
+        }
+
+    var save_data := {
+        "unlocked_levels": unlocked_levels,
+        "completed_levels": completed_levels,
+        "high_scores": high_scores,
+        "coins": coins
+    }
+
+    # 直接使用SaveManager保存
+    var save_manager := SaveManager.new()
+    var success: bool = save_manager.save_game(SAVE_SLOT, save_data)
+
+    # 发送EventBus.level_progress_saved事件
+    EventBus.level_progress_saved.emit(success)
+
+    return success
+
+
+# 加载关卡进度
+func load_level_progress() -> void:
+    # 直接使用SaveManager加载
+    var save_manager := SaveManager.new()
+    var loaded_data := save_manager.load_game(SAVE_SLOT)
+
+    # 如果加载失败，使用默认状态（只有1-1解锁）
+    if loaded_data.is_empty():
+        _unlock_first_level()
+        return
+
+    # 加载成功，更新关卡状态
+    for level in _levels:
+        # 重置状态
+        level.is_unlocked = false
+        level.is_completed = false
+        level.high_score = 0
+        level.coins_collected = 0
+
+        # 从加载数据恢复状态
+        var level_id = level.level_id
+
+        # 恢复解锁状态
+        if level_id in loaded_data.get("unlocked_levels", []):
+            level.is_unlocked = true
+
+        # 恢复完成状态
+        if level_id in loaded_data.get("completed_levels", []):
+            level.is_completed = true
+
+        # 恢复最高分
+        var high_scores: Dictionary = loaded_data.get("high_scores", {})
+        if level_id in high_scores:
+            level.high_score = high_scores[level_id]
+
+        # 恢复金币数据
+        var coins_data: Dictionary = loaded_data.get("coins", {})
+        if level_id in coins_data:
+            level.coins_collected = coins_data[level_id].get("collected", 0)
+            level.total_coins = coins_data[level_id].get("total", 0)
+
+
+# 重置所有关卡进度
+func reset_progress() -> void:
+    # 重置所有关卡状态
+    for level in _levels:
+        level.is_unlocked = false
+        level.is_completed = false
+        level.high_score = 0
+        level.coins_collected = 0
+
+    # 只保留1-1解锁
+    _unlock_first_level()
