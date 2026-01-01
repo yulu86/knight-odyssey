@@ -33,3 +33,20 @@ signal scene_loading_progress(progress: float)
 
 @warning_ignore("unused_signal")
 signal scene_loading_finished(scene_path: String)
+
+# Game initialization signals
+@warning_ignore("unused_signal")
+signal game_manager_initialized()
+
+@warning_ignore("unused_signal")
+signal config_loaded(success: bool)
+
+# Save/Load signals
+@warning_ignore("unused_signal")
+signal game_saved(slot_id: int, success: bool)
+
+@warning_ignore("unused_signal")
+signal game_loaded(slot_id: int, success: bool)
+
+@warning_ignore("unused_signal")
+signal save_data_loaded(data: Dictionary)

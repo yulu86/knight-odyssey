@@ -1,7 +1,6 @@
 # ConfigManager
 # 配置管理器类，负责加载和管理游戏配置
-class_name ConfigManager
-extends RefCounted
+extends Node
 
 # 默认配置值
 const DEFAULT_PLAYER_SPEED: float = 200.0
