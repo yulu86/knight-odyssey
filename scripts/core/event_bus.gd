@@ -20,3 +20,16 @@ signal coin_collected(value: int)
 
 @warning_ignore("unused_signal")
 signal player_damaged(damage: int)
+
+# Scene management signals
+@warning_ignore("unused_signal")
+signal scene_changed(scene_name: String)
+
+@warning_ignore("unused_signal")
+signal scene_loading_started(scene_path: String)
+
+@warning_ignore("unused_signal")
+signal scene_loading_progress(progress: float)
+
+@warning_ignore("unused_signal")
+signal scene_loading_finished(scene_path: String)
