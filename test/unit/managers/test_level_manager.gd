@@ -163,3 +163,78 @@ func test_get_current_level_id():
     await wait_seconds(0.1)
 
     assert_eq(LevelManager.get_current_level_id(), "1-1", "Current level ID should be 1-1")
+
+
+# Task 3: 关卡解锁和完成机制
+
+
+func test_complete_level_marks_completed():
+    # 测试标记关卡完成
+    # - 调用complete_level("1-1", 1000)
+    # - 验证关卡is_completed为true
+    # - 验证关卡high_score为1000
+    watch_signals(EventBus)
+
+    LevelManager.complete_level("1-1", 1000)
+
+    assert_true(LevelManager.is_level_completed("1-1"), "Level 1-1 should be completed")
+    assert_eq(LevelManager.get_level_high_score("1-1"), 1000, "High score should be 1000")
+
+
+func test_complete_level_updates_high_score():
+    # 测试更新最高分
+    # - 完成关卡得分500
+    # - 再次完成得分1000
+    # - 验证最高分为1000（取最大值）
+    watch_signals(EventBus)
+
+    LevelManager.complete_level("1-1", 500)
+    LevelManager.complete_level("1-1", 1000)
+
+    assert_eq(LevelManager.get_level_high_score("1-1"), 1000, "High score should be 1000 (max)")
+
+
+func test_complete_level_unlocks_next():
+    # 测试完成关卡后解锁下一关
+    # - 完成1-1关卡
+    # - 验证1-2关卡is_unlocked为true
+    # - 验证发送level_unlocked事件
+    watch_signals(EventBus)
+
+    assert_false(LevelManager.is_level_unlocked("1-2"), "Level 1-2 should be locked initially")
+
+    LevelManager.complete_level("1-1", 1000)
+
+    assert_true(LevelManager.is_level_unlocked("1-2"), "Level 1-2 should be unlocked after completing 1-1")
+    assert_signal_emitted(EventBus, "level_unlocked", "level_unlocked signal should be emitted")
+
+
+func test_unlock_level():
+    # 测试手动解锁关卡
+    # - 解锁1-3关卡
+    # - 验证is_unlocked为true
+    # - 验证发送level_unlocked事件
+    watch_signals(EventBus)
+
+    assert_false(LevelManager.is_level_unlocked("1-3"), "Level 1-3 should be locked initially")
+
+    LevelManager.unlock_level("1-3")
+
+    assert_true(LevelManager.is_level_unlocked("1-3"), "Level 1-3 should be unlocked")
+    assert_signal_emitted(EventBus, "level_unlocked", "level_unlocked signal should be emitted")
+
+
+func test_complete_level_sends_event():
+    # 测试完成关卡时发送事件
+    # - 监听EventBus.level_completed信号
+    # - 完成关卡得分1000
+    # - 验证信号被触发，参数为level_id和score
+    watch_signals(EventBus)
+
+    LevelManager.complete_level("1-1", 1000)
+
+    assert_signal_emitted(EventBus, "level_completed", "level_completed signal should be emitted")
+
+    var signal_args = get_signal_parameters(EventBus, "level_completed")
+    assert_eq(signal_args[0], "1-1", "level_completed signal should contain correct level_id")
+    assert_eq(signal_args[1], 1000, "level_completed signal should contain correct score")

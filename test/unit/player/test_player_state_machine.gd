@@ -138,5 +138,3 @@ func test_player_state_machine_forwards_process_to_current_state():
 	_test_machine.change_state(PlayerState.State.IDLE)
 	_test_machine.process(0.016)
 	assert_true(true, "process should be forwarded to current state")
-
-

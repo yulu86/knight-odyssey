@@ -156,6 +156,66 @@ func get_current_level_id() -> String:
     return current_level.level_id
 
 
+# 完成关卡
+# @param level_id: 关卡ID
+# @param score: 本次得分
+func complete_level(level_id: String, score: int) -> void:
+    # 获取关卡数据
+    var level: LevelData = get_level_info(level_id)
+    if level == null:
+        return
+
+    # 设置is_completed为true
+    level.is_completed = true
+
+    # 更新high_score（取最大值）
+    if score > level.high_score:
+        level.high_score = score
+
+    # 发送EventBus.level_completed事件
+    EventBus.level_completed.emit(level_id, score)
+
+    # 解锁下一关
+    _unlock_next_level(level_id)
+
+
+# 解锁关卡
+# @param level_id: 关卡ID
+func unlock_level(level_id: String) -> void:
+    # 获取关卡数据
+    var level: LevelData = get_level_info(level_id)
+    if level == null:
+        return
+
+    # 如果已解锁，直接返回
+    if level.is_unlocked:
+        return
+
+    # 设置is_unlocked为true
+    level.is_unlocked = true
+
+    # 发送EventBus.level_unlocked事件
+    EventBus.level_unlocked.emit(level_id)
+
+
+# 解锁下一关
+# @param current_level_id: 当前关卡ID
+func _unlock_next_level(current_level_id: String) -> void:
+    # 解析当前level_id获取序号（如"1-1"中的"1"）
+    var parts := current_level_id.split("-")
+    if parts.size() != 2:
+        return
+
+    var chapter := parts[0]
+    var level_num := parts[1].to_int()
+
+    # 计算下一关ID（如"1-2"）
+    var next_level_id := "%s-%d" % [chapter, level_num + 1]
+
+    # 调用unlock_level解锁下一关
+    unlock_level(next_level_id)
+
+
 # 初始化默认关卡数据
 func _initialize_default_levels() -> void:
     # 添加1-1关卡
