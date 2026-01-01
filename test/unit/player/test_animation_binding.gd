@@ -15,6 +15,41 @@ func before_each():
 	var test_scene_packed = load("res://test/integration/player/test_player.tscn")
 	_test_scene = test_scene_packed.instantiate()
 
+	# Add to scene tree first to initialize all nodes
+	add_child_autofree(_test_scene)
+
+	# Wait for scene to be ready
+	await get_tree().process_frame
+	await get_tree().physics_frame
+
+	# Get player and its nodes from the test scene
+	_player = _test_scene.get_node("Player")
+	_animation_player = _player.get_node("AnimationPlayer")
+	_state_machine = _player.get_node("PlayerStateMachine")
+
+	# Disable player's automatic processing during test setup
+	_original_process_mode = _player.process_mode
+	_player.process_mode = Node.PROCESS_MODE_DISABLED
+
+	# Reset velocity and position - place player above ground
+	_player.velocity = Vector2.ZERO
+	_player.position = Vector2(100, 110)
+
+	# Wait for physics to settle without processing
+	for i in range(5):
+		await get_tree().physics_frame
+
+	# Re-enable player processing
+	_player.process_mode = _original_process_mode
+
+	# Wait for physics to process
+	await get_tree().physics_frame
+
+	# Reset to IDLE state after physics initializes floor state
+	_state_machine.change_state(PlayerState.State.IDLE)
+	await get_tree().process_frame
+	await get_tree().physics_frame
+
 	# Get the player and its nodes from the test scene
 	_player = _test_scene.get_node("Player")
 	_animation_player = _player.get_node("AnimationPlayer")
@@ -24,19 +59,27 @@ func before_each():
 	_original_process_mode = _player.process_mode
 	_player.process_mode = Node.PROCESS_MODE_DISABLED
 
-	# Add to scene tree AFTER getting references
-	add_child_autofree(_test_scene)
-
-	# Reset velocity and call move_and_slide to settle on ground
+	# Reset velocity and position - place player above ground
 	_player.velocity = Vector2.ZERO
-	_player.move_and_slide()
-	_player.move_and_slide()
+	_player.position = Vector2(100, 110)
+
+	# Wait for physics to settle
+	for i in range(5):
+		await get_tree().physics_frame
+
+	# Manually ensure player is on floor before enabling processing
+	var floor_position_y = 131.0
+	_player.position.y = floor_position_y - 8.0
 
 	# Re-enable player processing
 	_player.process_mode = _original_process_mode
 
+	# Wait for physics to process
+	await get_tree().physics_frame
+
 	# Reset to IDLE state after move_and_slide initializes floor state
 	_state_machine.change_state(PlayerState.State.IDLE)
+	await get_tree().process_frame
 
 
 func after_each():
@@ -72,9 +115,22 @@ func test_jump_state_plays_jump_animation():
 
 func test_fall_state_plays_fall_animation():
 	# Test that entering fall state plays fall animation
+	# Disable player processing to prevent immediate state transition
+	var was_processing = _player.process_mode
+	_player.process_mode = Node.PROCESS_MODE_DISABLED
+
+	# Move player into the air
+	_player.position.y = 50.0
+
+	# Change to fall state and verify animation is set immediately
 	_state_machine.change_state(PlayerState.State.FALL)
 	await get_tree().process_frame
+
+	# Check that fall animation is playing
 	assert_eq(_animation_player.current_animation, "fall", "Fall state should play fall animation")
+
+	# Restore processing mode
+	_player.process_mode = was_processing
 
 
 func test_idle_animation_exists():
