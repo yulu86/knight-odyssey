@@ -50,3 +50,22 @@ signal game_loaded(slot_id: int, success: bool)
 
 @warning_ignore("unused_signal")
 signal save_data_loaded(data: Dictionary)
+
+# Level management signals
+@warning_ignore("unused_signal")
+signal level_loaded(level_id: String)
+
+@warning_ignore("unused_signal")
+signal level_started(level_id: String)
+
+@warning_ignore("unused_signal")
+signal level_completed(level_id: String, score: int)
+
+@warning_ignore("unused_signal")
+signal level_unlocked(level_id: String)
+
+@warning_ignore("unused_signal")
+signal checkpoint_reached(checkpoint_id: String)
+
+@warning_ignore("unused_signal")
+signal level_progress_saved(success: bool)

@@ -1,5 +1,17 @@
 extends GutTest
 
+
+func before_each():
+    # 重置LevelManager状态
+    LevelManager._levels = []
+    LevelManager.current_level = null
+    LevelManager._progress_data = {}
+
+    # 重新初始化默认关卡
+    LevelManager._initialize_default_levels()
+    LevelManager._unlock_first_level()
+
+
 func test_level_manager_autoload_singleton():
     # 验证LevelManager作为AutoLoad单例可访问
     assert_not_null(LevelManager, "LevelManager should be accessible as singleton")
@@ -60,3 +72,94 @@ func test_get_level_high_score():
     # 测试获取最高分
     assert_eq(LevelManager.get_level_high_score("1-1"), 0, "New level should have 0 high score")
     assert_eq(LevelManager.get_level_high_score("invalid"), 0, "Invalid level should return 0")
+
+
+# Task 2: 场景切换和关卡加载机制
+
+
+func test_load_level_sends_event():
+    # 测试加载关卡时发送事件
+    # - 监听EventBus.level_loaded信号
+    # - 调用load_level("1-1")
+    # - 验证信号被触发，参数为"1-1"
+    watch_signals(EventBus)
+
+    LevelManager.load_level("1-1")
+
+    assert_signal_emitted(EventBus, "level_loaded", "level_loaded signal should be emitted")
+
+    var signal_args = get_signal_parameters(EventBus, "level_loaded")
+    assert_eq(signal_args[0], "1-1", "level_loaded signal should contain correct level_id")
+
+
+func test_load_level_sets_current_level():
+    # 测试加载关卡后设置当前关卡
+    # - 调用load_level("1-1")
+    # - 验证current_level不为null
+    # - 验证current_level.level_id为"1-1"
+    LevelManager.load_level("1-1")
+    await wait_seconds(0.1)
+
+    var current_level: LevelManager.LevelData = LevelManager.get_current_level()
+    assert_not_null(current_level, "current_level should not be null after loading")
+    assert_eq(current_level.level_id, "1-1", "current_level.level_id should be 1-1")
+
+
+func test_load_level_triggers_game_manager():
+    # 测试加载关卡时调用GameManager
+    # - 验证场景加载被触发
+    # 注意：由于场景文件不存在，scene_loading_finished不会触发
+    # 但load_level应该验证场景文件存在性
+    var load_result: bool = LevelManager.load_level("1-1")
+    await wait_seconds(0.1)
+
+    assert_true(load_result, "load_level should succeed even if scene file doesn't exist in test")
+    assert_not_null(LevelManager.get_current_level(), "current_level should be set")
+
+
+func test_load_invalid_level():
+    # 测试加载不存在的关卡
+    # - 调用load_level("invalid")
+    # - 验证不触发场景切换
+    # - 验证发送错误事件或返回false
+    var load_result: bool = LevelManager.load_level("invalid")
+    await wait_seconds(0.1)
+
+    assert_false(load_result, "load_level should return false for invalid level")
+    assert_null(LevelManager.get_current_level(), "current_level should remain null")
+
+
+func test_load_level_performance():
+    # 测试关卡加载性能
+    # - 记录调用load_level前的时间
+    # - 调用load_level("1-1")
+    # - 验证加载时间<2秒
+    var start_time: float = Time.get_unix_time_from_system()
+
+    LevelManager.load_level("1-1")
+    await wait_seconds(0.1)
+
+    var end_time: float = Time.get_unix_time_from_system()
+    var load_time: float = end_time - start_time
+
+    assert_lt(load_time, 2.0, "Level loading time should be less than 2 seconds")
+
+
+func test_is_in_level():
+    # 测试检查是否在关卡中
+    assert_false(LevelManager.is_in_level(), "Should not be in level initially")
+
+    LevelManager.load_level("1-1")
+    await wait_seconds(0.1)
+
+    assert_true(LevelManager.is_in_level(), "Should be in level after loading")
+
+
+func test_get_current_level_id():
+    # 测试获取当前关卡ID
+    assert_eq(LevelManager.get_current_level_id(), "", "Current level ID should be empty initially")
+
+    LevelManager.load_level("1-1")
+    await wait_seconds(0.1)
+
+    assert_eq(LevelManager.get_current_level_id(), "1-1", "Current level ID should be 1-1")

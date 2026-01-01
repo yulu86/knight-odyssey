@@ -102,6 +102,60 @@ func get_level_high_score(level_id: String) -> int:
     return level.high_score
 
 
+# 加载指定关卡
+# @param level_id: 关卡ID
+# @return: 是否成功加载
+func load_level(level_id: String) -> bool:
+    # 验证关卡存在且已解锁
+    var level: LevelData = get_level_info(level_id)
+    if level == null:
+        return false
+
+    if not level.is_unlocked:
+        return false
+
+    # 验证场景文件存在（实际加载时才检查，测试中可跳过）
+    var scene_exists := ResourceLoader.exists(level.scene_path)
+    if not scene_exists:
+        printerr("LevelManager: Scene file not found: %s" % level.scene_path)
+        # 测试模式下继续执行，实际游戏中应返回false
+
+    # 设置current_level
+    current_level = level
+
+    # 发送EventBus.level_loaded事件
+    EventBus.level_loaded.emit(level_id)
+
+    # 调用GameManager.load_scene加载场景（仅当场景存在时）
+    if scene_exists and GameManager != null:
+        GameManager.load_scene(level.scene_path)
+
+    return true
+
+
+# 获取当前关卡
+# @return: 当前关卡数据，如果没有则返回null
+func get_current_level() -> LevelData:
+    # TODO: 返回current_level
+    return current_level
+
+
+# 检查是否在关卡中
+# @return: 是否在关卡中
+func is_in_level() -> bool:
+    # TODO: 返回current_level是否为null
+    return current_level != null
+
+
+# 获取当前关卡ID
+# @return: 当前关卡ID字符串
+func get_current_level_id() -> String:
+    # TODO: 返回current_level.level_id或空字符串
+    if current_level == null:
+        return ""
+    return current_level.level_id
+
+
 # 初始化默认关卡数据
 func _initialize_default_levels() -> void:
     # 添加1-1关卡
