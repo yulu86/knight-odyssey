@@ -8,10 +8,11 @@ class_name Player
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var player_state_machine: PlayerStateMachine = $PlayerStateMachine
 
-var config_manager: ConfigManager = ConfigManager.new()
+var config_manager: ConfigManager
 
 
 func _ready() -> void:
+	config_manager = ConfigManager
 	if player_state_machine != null:
 		var components = PlayerComponents.new(self)
 		components.config_manager = config_manager

@@ -12,4 +12,4 @@ func _init(context_player: Player):
 	self.player = context_player
 	self.sprite_2d = context_player.sprite_2d
 	self.animation_player = context_player.animation_player
-	self.config_manager = ConfigManager.new()
+	self.config_manager = ConfigManager
